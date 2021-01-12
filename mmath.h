@@ -12,6 +12,8 @@
 #define m_sqrt(n)   sqrtf(n)
 #define m_cast(n)   (f32*)&n
 
+#define m_pi        3.1415926f
+
 /* ===========================
  *        2D Vector
  * ===========================
@@ -98,11 +100,10 @@ vec2_rotate(const vec2_t vec,
             const f32 angle)
 {
     vec2_t rot_vec;
-    f32 d_ang; 
+    f32 r_angle = (angle * m_pi) / 180; 
 
-    r_ang = (angle * PI) / 180;
-    rot_vec.x = ((vec.x * m_cos(r_ang)) - (vec.y * m_sin(r_ang)));
-    rot_vec.y = ((vec.x * m_sin(r_ang)) + (vec.y * m_cos(r_ang)));
+    rot_vec.x = ((vec.x * m_cos(r_angle)) - (vec.y * m_sin(r_angle)));
+    rot_vec.y = ((vec.x * m_sin(r_angle)) + (vec.y * m_cos(r_angle)));
 
     return rot_vec;
 }
@@ -260,6 +261,8 @@ mat4_rotate(mat4_t* matrix, f32 angle, f32 x, f32 y, f32 z)
     f32 v = n_vect.y;
     f32 w = n_vect.z;
     f32 r_angle = angle * 0.017453f;
+    f32 cos = m_cos(r_angle);
+    f32 sin = m_sin(r_angle);
 
     matrix->col1[0] = (u * u) + (1 - (u * u)) * m_cos(r_angle);
     matrix->col1[1] = ((u * v) * (1 - m_cos(r_angle))) + w * m_sin(r_angle);
@@ -292,11 +295,5 @@ mat4_perspective(mat4_t* matrix,
     matrix->col4[2] = ((-2 * far * near) / (far - near));
     matrix->col4[3] = 0;
 }
-
-void
-mat4_lookat(mat4_t* matrix, )
-
-mat4_t
-mat4_ctor();
 
 #endif // MMATH_H
