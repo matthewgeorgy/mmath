@@ -296,4 +296,7 @@ mat4_perspective(mat4_t* matrix,
 void
 mat4_lookat(mat4_t* matrix, )
 
+mat4_t
+mat4_ctor();
+
 #endif // MMATH_H
