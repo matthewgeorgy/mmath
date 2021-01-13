@@ -11,7 +11,6 @@
 #define m_tan(n)    tanf(n)
 #define m_sqrt(n)   sqrtf(n)
 #define m_cast(n)   (f32*)&n
-#define m_conv_dr(n)   n * 0.017453f
 
 #define m_pi        3.1415926f
 #define m_deg_to_rad 0.017453f
@@ -214,30 +213,67 @@ typedef struct MAT4
     f32 col4[4];
 } mat4_t;
 
-void 
-mat4_ctor_id(mat4_t* matrix, 
-             const f32 value)
+mat4_t
+mat4_ctor()
 {
-    memset(matrix, 0, 16 * sizeof(f32));
-    f32* ptr = (f32*)matrix;
+    mat4_t matrix;
+
+    memset(&matrix, 0, 16 * sizeof(f32));
+
+    return matrix;
+}
+
+mat4_t
+mat4_identity(mat4_t matrix)
+{
+    f32* ptr = (f32*)&matrix;
 
     for(u8 i = 0; i < 4; i++)
     {
-        *ptr = value;
+        *ptr = 1.0f;
         ptr += 5;
     }
+
+    return matrix;
 }
 
-void
-mat4_translate(mat4_t* matrix, 
-               const f32 x, 
-               const f32 y, 
-               const f32 z)
+mat4_t
+mat4_trans(mat4_t matrix, 
+           const f32 x,
+           const f32 y,
+           const f32 z)
 {
-    matrix->col4[0] = x;
-    matrix->col4[1] = y;
-    matrix->col4[2] = z;
+    matrix.col4[0] = x;
+    matrix.col4[1] = y;
+    matrix.col4[2] = z;
+
+    return matrix;
 }
+
+/* void */ 
+/* mat4_ctor_id(mat4_t* matrix, */ 
+/*              const f32 value) */
+/* { */
+/*     memset(matrix, 0, 16 * sizeof(f32)); */
+/*     f32* ptr = (f32*)matrix; */
+
+/*     for(u8 i = 0; i < 4; i++) */
+/*     { */
+/*         *ptr = value; */
+/*         ptr += 5; */
+/*     } */
+/* } */
+
+/* void */
+/* mat4_translate(mat4_t* matrix, */ 
+/*                const f32 x, */ 
+/*                const f32 y, */ 
+/*                const f32 z) */
+/* { */
+/*     matrix->col4[0] = x; */
+/*     matrix->col4[1] = y; */
+/*     matrix->col4[2] = z; */
+/* } */
 
 void
 mat4_print(mat4_t matrix)
@@ -255,12 +291,39 @@ mat4_print(mat4_t matrix)
     }
 } 
 
-void
-mat4_rotate(mat4_t* matrix, 
-            const f32 angle, 
-            const f32 x, 
-            const f32 y, 
-            const f32 z)
+/* void */
+/* mat4_rotate(mat4_t* matrix, */ 
+/*             const f32 angle, */ 
+/*             const f32 x, */ 
+/*             const f32 y, */ 
+/*             const f32 z) */
+/* { */
+/*     vec3_t vect = {x, y, z}; */
+/*     vec3_t n_vect = vec3_normalize(vect); */
+/*     f32 u = n_vect.x; */
+/*     f32 v = n_vect.y; */
+/*     f32 w = n_vect.z; */
+/*     f32 r_angle = angle * 0.017453f; */
+
+/*     matrix->col1[0] = (u * u) + (1 - (u * u)) * m_cos(r_angle); */
+/*     matrix->col1[1] = ((u * v) * (1 - m_cos(r_angle))) + w * m_sin(r_angle); */
+/*     matrix->col1[2] = ((u * w) * (1 - m_cos(r_angle))) - v * m_sin(r_angle); */
+
+/*     matrix->col2[0] = ((u * v) * (1 - m_cos(r_angle))) - w * m_sin(r_angle); */
+/*     matrix->col2[1] = (v * v) + (1 - (v * v)) * m_cos(r_angle); */
+/*     matrix->col2[2] = ((v * w) * (1 - m_cos(r_angle))) + u * m_sin(r_angle); */
+
+/*     matrix->col3[0] = ((u * w) * (1 - m_cos(r_angle))) + v * m_sin(r_angle); */
+/*     matrix->col3[1] = ((v * w) * (1 - m_cos(r_angle))) - u * m_sin(r_angle); */
+/*     matrix->col3[2] = (w * w) + (1 - (w * w)) * m_cos(r_angle); */
+/* } */
+
+mat4_t
+mat4_rot(mat4_t matrix, 
+         const f32 angle, 
+         const f32 x, 
+         const f32 y, 
+         const f32 z)
 {
     vec3_t vect = {x, y, z};
     vec3_t n_vect = vec3_normalize(vect);
@@ -269,68 +332,125 @@ mat4_rotate(mat4_t* matrix,
     f32 w = n_vect.z;
     f32 r_angle = angle * 0.017453f;
 
-    matrix->col1[0] = (u * u) + (1 - (u * u)) * m_cos(r_angle);
-    matrix->col1[1] = ((u * v) * (1 - m_cos(r_angle))) + w * m_sin(r_angle);
-    matrix->col1[2] = ((u * w) * (1 - m_cos(r_angle))) - v * m_sin(r_angle);
+    matrix.col1[0] = (u * u) + (1 - (u * u)) * m_cos(r_angle);
+    matrix.col1[1] = ((u * v) * (1 - m_cos(r_angle))) + w * m_sin(r_angle);
+    matrix.col1[2] = ((u * w) * (1 - m_cos(r_angle))) - v * m_sin(r_angle);
 
-    matrix->col2[0] = ((u * v) * (1 - m_cos(r_angle))) - w * m_sin(r_angle);
-    matrix->col2[1] = (v * v) + (1 - (v * v)) * m_cos(r_angle);
-    matrix->col2[2] = ((v * w) * (1 - m_cos(r_angle))) + u * m_sin(r_angle);
+    matrix.col2[0] = ((u * v) * (1 - m_cos(r_angle))) - w * m_sin(r_angle);
+    matrix.col2[1] = (v * v) + (1 - (v * v)) * m_cos(r_angle);
+    matrix.col2[2] = ((v * w) * (1 - m_cos(r_angle))) + u * m_sin(r_angle);
 
-    matrix->col3[0] = ((u * w) * (1 - m_cos(r_angle))) + v * m_sin(r_angle);
-    matrix->col3[1] = ((v * w) * (1 - m_cos(r_angle))) - u * m_sin(r_angle);
-    matrix->col3[2] = (w * w) + (1 - (w * w)) * m_cos(r_angle);
+    matrix.col3[0] = ((u * w) * (1 - m_cos(r_angle))) + v * m_sin(r_angle);
+    matrix.col3[1] = ((v * w) * (1 - m_cos(r_angle))) - u * m_sin(r_angle);
+    matrix.col3[2] = (w * w) + (1 - (w * w)) * m_cos(r_angle);
+
+    return matrix;
 }
 
-void
-mat4_perspective(mat4_t* matrix, 
-                 f32 fov, 
-                 f32 aspect_ratio, 
-                 f32 near, 
-                 f32 far)
+/* void */
+/* mat4_perspective(mat4_t* matrix, */ 
+/*                  f32 fov, */ 
+/*                  f32 aspect_ratio, */ 
+/*                  f32 near, */ 
+/*                  f32 far) */
+/* { */
+/*     f32 r_fov = fov * m_deg_to_rad; */
+
+/*     matrix->col1[0] = 1 / (aspect_ratio * m_tan(r_fov / 2.0f)); */
+
+/*     matrix->col2[1] = 1 / (m_tan(r_fov / 2.0f)); */
+
+/*     matrix->col3[2] = -1 * ((far + near) / (far - near)); */
+/*     matrix->col3[3] = -1; */
+
+/*     matrix->col4[2] = ((-2 * far * near) / (far - near)); */
+/*     matrix->col4[3] = 0; */
+/* } */
+
+mat4_t
+mat4_persp(mat4_t matrix,
+           f32 fov,
+           f32 aspect_ratio,
+           f32 near,
+           f32 far)
 {
     f32 r_fov = fov * m_deg_to_rad;
 
-    matrix->col1[0] = 1 / (aspect_ratio * m_tan(r_fov / 2.0f));
+    matrix.col1[0] = 1 / (aspect_ratio * m_tan(r_fov / 2.0f));
 
-    matrix->col2[1] = 1 / (m_tan(r_fov / 2.0f));
+    matrix.col2[1] = 1 / (m_tan(r_fov / 2.0f));
 
-    matrix->col3[2] = -1 * ((far + near) / (far - near));
-    matrix->col3[3] = -1;
+    matrix.col3[2] = -1 * ((far + near) / (far - near));
+    matrix.col3[3] = -1;
 
-    matrix->col4[2] = ((-2 * far * near) / (far - near));
-    matrix->col4[3] = 0;
+    matrix.col4[2] = ((-2 * far * near) / (far - near));
+    matrix.col4[3] = 0;
+
+    return matrix;
 }
 
-void
-mat4_lookat(mat4_t* matrix, 
+/* void */
+/* mat4_lookat(mat4_t* matrix, */ 
+/*             vec3_t eye, */ 
+/*             vec3_t center, */ 
+/*             vec3_t up) */
+/* { */
+/*     const vec3_t f = vec3_normalize(vec3_subtract(center, eye)); */  
+/*     const vec3_t s = vec3_normalize(vec3_cross(f, up)); */
+/*     const vec3_t u = vec3_cross(s, f); */
+
+/*     matrix->col1[0] = s.x; */
+/*     matrix->col1[1] = u.x; */
+/*     matrix->col1[2] = -f.x; */
+/*     matrix->col1[3] = 0; */
+
+/*     matrix->col2[0] = s.y; */
+/*     matrix->col2[1] = u.y; */
+/*     matrix->col2[2] = -f.y; */
+/*     matrix->col2[3] = 0; */
+
+/*     matrix->col3[0] = s.z; */
+/*     matrix->col3[1] = u.z; */
+/*     matrix->col3[2] = -f.z; */
+/*     matrix->col3[3] = 0; */
+
+/*     matrix->col4[0] = -vec3_dot(s, eye); */
+/*     matrix->col4[1] = -vec3_dot(u, eye); */
+/*     matrix->col4[2] = vec3_dot(f, eye); */
+/*     matrix->col4[3] = 1; */
+/* } */
+
+mat4_t
+mat4_lookat(mat4_t matrix, 
             vec3_t eye, 
             vec3_t center, 
             vec3_t up)
 {
-    const vec3_t f = vec3_normalize(vec3_subtract(center, eye));
+    const vec3_t f = vec3_normalize(vec3_subtract(center, eye));  
     const vec3_t s = vec3_normalize(vec3_cross(f, up));
     const vec3_t u = vec3_cross(s, f);
 
-    matrix->col1[0] = s.x;
-    matrix->col1[1] = u.x;
-    matrix->col1[2] = -f.x
-    matrix->col1[3] = 0;
+    matrix.col1[0] = s.x;
+    matrix.col1[1] = u.x;
+    matrix.col1[2] = -f.x;
+    matrix.col1[3] = 0;
 
-    matrix->col2[0] = s.y;
-    matrix->col2[1] = u.y;
-    matrix->col2[2] = -f.y;
-    matrix->col2[3] = 0;
+    matrix.col2[0] = s.y;
+    matrix.col2[1] = u.y;
+    matrix.col2[2] = -f.y;
+    matrix.col2[3] = 0;
 
-    matrix->col3[0] = s.z;
-    matrix->col3[1] = u.z;
-    matrix->col3[2] = -f.z;
-    matrix->col3[3] = 0;
+    matrix.col3[0] = s.z;
+    matrix.col3[1] = u.z;
+    matrix.col3[2] = -f.z;
+    matrix.col3[3] = 0;
 
-    matrix->col4[0] = -vec3_dot(s, eye);
-    matrix->col4[1] = -vec3_dot(u, eye);
-    matrix->col4[2] = vec3_dot(f, eye);
-    matrix->col4[3] = 1;
+    matrix.col4[0] = -vec3_dot(s, eye);
+    matrix.col4[1] = -vec3_dot(u, eye);
+    matrix.col4[2] = vec3_dot(f, eye);
+    matrix.col4[3] = 1;
+
+    return matrix;
 }
 
 #endif // MMATH_H
