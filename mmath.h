@@ -12,11 +12,35 @@
 #define m_sqrt(n)   sqrtf(n)
 #define m_cast(n)   (f32*)&n
 
-#define m_pi        3.1415926f
-#define m_deg_to_rad 0.017453f
+#define m_pi            3.1415926f
+#define m_deg_to_rad    0.017453f
 
 /* ===========================
- *        2D Vector
+ *          MISC.
+ * ===========================
+ * */
+
+f32
+m_invsqrt(f32 number)
+{
+    int i;
+    f32 x2, y;
+
+    x2 = number * 0.5f;
+    y = number;
+    i = *(int*)&y;
+
+    i = 0x5f3759df - (i >> 1);
+
+    y = *(f32*)&i;
+    y = y * (1.5f - (x2 * y * y));
+    /* y = y * (1.5f - (x2 * y * y)); */ 
+
+    return y;
+}
+
+/* ===========================
+ *         2D Vector
  * ===========================
  * */
 
@@ -40,7 +64,7 @@ vec2_add(const vec2_t a,
 
 vec2_t      
 vec2_sub(const vec2_t a, 
-              const vec2_t b)
+         const vec2_t b)
 {
     vec2_t vec;
 
@@ -52,7 +76,7 @@ vec2_sub(const vec2_t a,
 
 vec2_t      
 vec2_scal(const vec2_t vec, 
-               const f32 scalar)
+          const f32 scalar)
 {
     vec2_t new_vec;
 
@@ -101,7 +125,7 @@ vec2_rotate(const vec2_t vec,
 }
 
 /* ===========================
- *        3D Vector
+ *         3D Vector
  * ===========================
  * */
 
@@ -127,7 +151,7 @@ vec3_add(const vec3_t a,
 
 vec3_t      
 vec3_sub(const vec3_t a, 
-              const vec3_t b)
+         const vec3_t b)
 {
     vec3_t vec;
 
@@ -140,7 +164,7 @@ vec3_sub(const vec3_t a,
 
 vec3_t      
 vec3_scal(const vec3_t vec, 
-               const f32 scalar)
+          const f32 scalar)
 {
     vec3_t new_vec;
 
@@ -206,7 +230,7 @@ typedef struct MAT4
 } mat4_t;
 
 mat4_t
-mat4_ctor()
+mat4_ctor(void)
 {
     mat4_t matrix;
 
@@ -231,9 +255,9 @@ mat4_identity(mat4_t matrix)
 
 mat4_t
 mat4_translate(mat4_t matrix, 
-           const f32 x,
-           const f32 y,
-           const f32 z)
+               const f32 x,
+               const f32 y,
+               const f32 z)
 {
     matrix.col4[0] = x;
     matrix.col4[1] = y;
@@ -260,10 +284,10 @@ mat4_print(mat4_t matrix)
 
 mat4_t
 mat4_rotate(mat4_t matrix, 
-         const f32 angle, 
-         const f32 x, 
-         const f32 y, 
-         const f32 z)
+            const f32 angle, 
+            const f32 x, 
+            const f32 y, 
+            const f32 z)
 {
     vec3_t vect = {x, y, z};
     vec3_t n_vect = vec3_normalize(vect);
@@ -289,10 +313,10 @@ mat4_rotate(mat4_t matrix,
 
 mat4_t
 mat4_perspective(mat4_t matrix,
-           f32 fov,
-           f32 aspect_ratio,
-           f32 near,
-           f32 far)
+                 const f32 fov,
+                 const f32 aspect_ratio,
+                 const f32 near,
+                 const f32 far)
 {
     f32 r_fov = fov * m_deg_to_rad;
 
@@ -311,11 +335,11 @@ mat4_perspective(mat4_t matrix,
 
 mat4_t
 mat4_lookat(mat4_t matrix, 
-            vec3_t eye, 
-            vec3_t center, 
-            vec3_t up)
+            const vec3_t eye, 
+            const vec3_t center, 
+            const vec3_t up)
 {
-    const vec3_t f = vec3_normalize(vec3_subtract(center, eye));  
+    const vec3_t f = vec3_normalize(vec3_sub(center, eye));  
     const vec3_t s = vec3_normalize(vec3_cross(f, up));
     const vec3_t u = vec3_cross(s, f);
 
@@ -340,6 +364,47 @@ mat4_lookat(mat4_t matrix,
     matrix.col4[3] = 1;
 
     return matrix;
+}
+
+mat4_t
+mat4_scale(mat4_t matrix,
+           const f32 scale_value)
+{
+    f32* ptr = (f32*)&matrix;
+
+    for(u8 i = 0; i < 3; i++)
+    {
+        *ptr = scale_value;
+        ptr += 5;
+    }
+    *ptr = 1.0f;
+
+    return matrix;
+}
+
+mat4_t
+mat4_mult(const mat4_t m1,
+          const mat4_t m2)
+{
+    mat4_t res = mat4_ctor();
+    f32* p1 = (f32*)&m1;
+    f32* p2 = (f32*)&m2;
+    f32* pres = (f32*)&res;
+
+    for(u8 y = 0; y < 4; y++)
+    {
+        for(u8 x = 0; x < 4; x++)
+        {
+            f32 sum = 0.0f;
+            for(u8 e = 0; e < 4; e++)
+            {
+                sum += p1[x + e * 4] * p2[e + y * 4];
+            }
+            pres[x + y * 4] = sum;
+        }
+    }
+
+    return res;
 }
 
 #endif // MMATH_H
