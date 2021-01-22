@@ -1,5 +1,6 @@
 #ifndef MMATH_H
 #define MMATH_H
+
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
@@ -14,30 +15,6 @@
 
 #define m_pi            3.1415926f
 #define m_deg_to_rad    0.017453f
-
-/* ===========================
- *          MISC.
- * ===========================
- * */
-
-f32
-m_invsqrt(f32 number)
-{
-    int i;
-    f32 x2, y;
-
-    x2 = number * 0.5f;
-    y = number;
-    i = *(int*)&y;
-
-    i = 0x5f3759df - (i >> 1);
-
-    y = *(f32*)&i;
-    y = y * (1.5f - (x2 * y * y));
-    /* y = y * (1.5f - (x2 * y * y)); */ 
-
-    return y;
-}
 
 /* ===========================
  *         2D Vector
@@ -290,23 +267,25 @@ mat4_rotate(mat4_t matrix,
             const f32 z)
 {
     vec3_t vect = {x, y, z};
-    vec3_t n_vect = vec3_normalize(vect);
-    f32 u = n_vect.x;
-    f32 v = n_vect.y;
-    f32 w = n_vect.z;
+    vect = vec3_normalize(vect);
+    f32 u = vect.x;
+    f32 v = vect.y;
+    f32 w = vect.z;
     f32 r_angle = angle * 0.017453f;
+    f32 c = m_cos(r_angle);
+    f32 s = m_sin(r_angle);
 
-    matrix.col1[0] = (u * u) + (1 - (u * u)) * m_cos(r_angle);
-    matrix.col1[1] = ((u * v) * (1 - m_cos(r_angle))) + w * m_sin(r_angle);
-    matrix.col1[2] = ((u * w) * (1 - m_cos(r_angle))) - v * m_sin(r_angle);
+    matrix.col1[0] = (u * u) + (1 - (u * u)) * c;
+    matrix.col1[1] = ((u * v) * (1 - c)) + w * s;
+    matrix.col1[2] = ((u * w) * (1 - c)) - v * s;
 
-    matrix.col2[0] = ((u * v) * (1 - m_cos(r_angle))) - w * m_sin(r_angle);
-    matrix.col2[1] = (v * v) + (1 - (v * v)) * m_cos(r_angle);
-    matrix.col2[2] = ((v * w) * (1 - m_cos(r_angle))) + u * m_sin(r_angle);
+    matrix.col2[0] = ((u * v) * (1 - c)) - w * s;
+    matrix.col2[1] = (v * v) + (1 - (v * v)) * c;
+    matrix.col2[2] = ((v * w) * (1 - c)) + u * s;
 
-    matrix.col3[0] = ((u * w) * (1 - m_cos(r_angle))) + v * m_sin(r_angle);
-    matrix.col3[1] = ((v * w) * (1 - m_cos(r_angle))) - u * m_sin(r_angle);
-    matrix.col3[2] = (w * w) + (1 - (w * w)) * m_cos(r_angle);
+    matrix.col3[0] = ((u * w) * (1 - c)) + v * s;
+    matrix.col3[1] = ((v * w) * (1 - c)) - u * s;
+    matrix.col3[2] = (w * w) + (1 - (w * w)) * c;
 
     return matrix;
 }
@@ -319,10 +298,11 @@ mat4_perspective(mat4_t matrix,
                  const f32 far)
 {
     f32 r_fov = fov * m_deg_to_rad;
+    f32 t = m_tan(r_fov / 2.0f);
 
-    matrix.col1[0] = 1 / (aspect_ratio * m_tan(r_fov / 2.0f));
+    matrix.col1[0] = 1 / (aspect_ratio * t);
 
-    matrix.col2[1] = 1 / (m_tan(r_fov / 2.0f));
+    matrix.col2[1] = 1 / t;
 
     matrix.col3[2] = -1 * ((far + near) / (far - near));
     matrix.col3[3] = -1;
