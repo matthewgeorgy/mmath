@@ -94,9 +94,11 @@ vec2_rotate(const vec2_t vec,
 {
     vec2_t rot_vec;
     f32 r_angle = angle * m_deg_to_rad;
+    f32 c = m_cos(r_angle);
+    f32 s = m_sin(r_angle);
 
-    rot_vec.x = ((vec.x * m_cos(r_angle)) - (vec.y * m_sin(r_angle)));
-    rot_vec.y = ((vec.x * m_sin(r_angle)) + (vec.y * m_cos(r_angle)));
+    rot_vec.x = ((vec.x * c) - (vec.y * s));
+    rot_vec.y = ((vec.x * s) + (vec.y * c));
 
     return rot_vec;
 }
