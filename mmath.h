@@ -268,26 +268,23 @@ mat4_rotate(mat4_t matrix,
             const f32 y, 
             const f32 z)
 {
-    vec3_t vect = {x, y, z};
-    vect = vec3_normalize(vect);
-    f32 u = vect.x;
-    f32 v = vect.y;
-    f32 w = vect.z;
+    vec3_t vec = {x, y, z};
+    vec = vec3_normalize(vec);
     f32 r_angle = angle * 0.017453f;
     f32 c = m_cos(r_angle);
     f32 s = m_sin(r_angle);
 
-    matrix.col1[0] = (u * u) + (1 - (u * u)) * c;
-    matrix.col1[1] = ((u * v) * (1 - c)) + w * s;
-    matrix.col1[2] = ((u * w) * (1 - c)) - v * s;
+    matrix.col1[0] = (vec.x * vec.x) + (1 - (vec.x * vec.x)) * c;
+    matrix.col1[1] = ((vec.x * vec.y) * (1 - c)) + vec.z * s;
+    matrix.col1[2] = ((vec.x * vec.z) * (1 - c)) - vec.y * s;
 
-    matrix.col2[0] = ((u * v) * (1 - c)) - w * s;
-    matrix.col2[1] = (v * v) + (1 - (v * v)) * c;
-    matrix.col2[2] = ((v * w) * (1 - c)) + u * s;
+    matrix.col2[0] = ((vec.x * vec.y) * (1 - c)) - vec.z * s;
+    matrix.col2[1] = (vec.y * vec.y) + (1 - (vec.y * vec.y)) * c;
+    matrix.col2[2] = ((vec.y * vec.z) * (1 - c)) + vec.x * s;
 
-    matrix.col3[0] = ((u * w) * (1 - c)) + v * s;
-    matrix.col3[1] = ((v * w) * (1 - c)) - u * s;
-    matrix.col3[2] = (w * w) + (1 - (w * w)) * c;
+    matrix.col3[0] = ((vec.x * vec.z) * (1 - c)) + vec.y * s;
+    matrix.col3[1] = ((vec.y * vec.z) * (1 - c)) - vec.x * s;
+    matrix.col3[2] = (vec.z * vec.z) + (1 - (vec.z * vec.z)) * c;
 
     return matrix;
 }
@@ -316,14 +313,15 @@ mat4_perspective(mat4_t matrix,
 }
 
 mat4_t
-mat4_lookat(mat4_t matrix, 
-            const vec3_t eye, 
+mat4_lookat(const vec3_t eye, 
             const vec3_t center, 
             const vec3_t up)
 {
     const vec3_t f = vec3_normalize(vec3_sub(center, eye));  
     const vec3_t s = vec3_normalize(vec3_cross(f, up));
     const vec3_t u = vec3_cross(s, f);
+
+    mat4_t matrix;
 
     matrix.col1[0] = s.x;
     matrix.col1[1] = u.x;
