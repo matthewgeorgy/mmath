@@ -221,7 +221,7 @@ mat4_ctor(void)
 mat4_t
 mat4_identity(mat4_t matrix)
 {
-    f32* ptr = (f32*)&matrix;
+    f32* ptr = m_cast(matrix);
 
     for(u8 i = 0; i < 4; i++)
     {
@@ -350,7 +350,7 @@ mat4_t
 mat4_scale(mat4_t matrix,
            const f32 scale_value)
 {
-    f32* ptr = (f32*)&matrix;
+    f32* ptr = m_cast(matrix);
 
     for(u8 i = 0; i < 3; i++)
     {
@@ -367,9 +367,9 @@ mat4_mult(const mat4_t m1,
           const mat4_t m2)
 {
     mat4_t res = mat4_ctor();
-    f32* p1 = (f32*)&m1;
-    f32* p2 = (f32*)&m2;
-    f32* pres = (f32*)&res;
+    f32* p1 = m_cast(m1);
+    f32* p2 = m_cast(m2);
+    f32* pres = m_cast(res);
 
     for(u8 y = 0; y < 4; y++)
     {
@@ -385,6 +385,17 @@ mat4_mult(const mat4_t m1,
     }
 
     return res;
+}
+
+mat4_t
+mat4_remove_translate(mat4_t matrix)
+{
+    for(u8 i = 0; i < 3; i++)
+    {
+        matrix.col4[i] = 0.0f;
+    }
+
+    return matrix;
 }
 
 #endif // MMATH_H
