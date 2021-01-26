@@ -104,7 +104,7 @@ vec2_rotate(const vec2_t vec,
             const f32 angle)
 {
     vec2_t rot_vec;
-    f32 r_angle = angle * m_deg_to_rad;
+    f32 r_angle = m_rads(angle);
     f32 c = m_cos(r_angle);
     f32 s = m_sin(r_angle);
 
@@ -281,7 +281,7 @@ mat4_rotate(mat4_t matrix,
 {
     vec3_t vec = {x, y, z};
     vec = vec3_normalize(vec);
-    f32 r_angle = angle * 0.017453f;
+    f32 r_angle = m_rads(angle);
     f32 c = m_cos(r_angle);
     f32 s = m_sin(r_angle);
 
@@ -307,7 +307,7 @@ mat4_perspective(mat4_t matrix,
                  const f32 near,
                  const f32 far)
 {
-    f32 r_fov = fov * m_deg_to_rad;
+    f32 r_fov = m_rads(fov);
     f32 t = m_tan(r_fov / 2.0f);
 
     matrix.col1[0] = 1 / (aspect_ratio * t);
@@ -405,6 +405,17 @@ mat4_remove_translate(mat4_t matrix)
     {
         matrix.col4[i] = 0.0f;
     }
+
+    return matrix;
+}
+
+mat4_t
+mat4_translate_v(mat4_t matrix,
+                const vec3_t vec)
+{
+    matrix.col4[0] = vec.x;
+    matrix.col4[1] = vec.y;
+    matrix.col4[2] = vec.z;
 
     return matrix;
 }
