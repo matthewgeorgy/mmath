@@ -323,6 +323,31 @@ mat4_rotate(mat4_t matrix,
 }
 
 mat4_t
+mat4_rotate_v(mat4_t matrix, 
+              const f32 angle,
+              const vec3_t vec)
+{
+    vec = vec3_normalize(vec);
+    f32 c = m_cos(m_rads(angle));
+    f32 s = m_sin(m_rads(angle));
+    f32 c1 = 1 - c;
+
+    matrix.col1[0] = (c1 * vec.x * vec.x) + c;
+    matrix.col1[1] = (c1 * vec.x * vec.y) + s * vec.z;
+    matrix.col1[2] = (c1 * vec.x * vec.z) - s * vec.y;
+
+    matrix.col2[0] = (c1 * vec.x * vec.y) - s * vec.z;
+    matrix.col2[1] = (c1 * vec.y * vec.y) + c;
+    matrix.col2[2] = (c1 * vec.y * vec.z) + s * vec.x;
+
+    matrix.col3[0] = (c1 * vec.x * vec.z) + s * vec.y;
+    matrix.col3[1] = (c1 * vec.y * vec.z) - s * vec.x;
+    matrix.col3[2] = (c1 * vec.z * vec.z) + c;
+
+    return matrix;
+}
+
+mat4_t
 mat4_perspective(mat4_t matrix,
                  const f32 fov,
                  const f32 aspect_ratio,
