@@ -11,10 +11,21 @@
 #define m_cos(n)    cosf(n)
 #define m_tan(n)    tanf(n)
 #define m_sqrt(n)   sqrtf(n)
+#define m_log(n)    logf(n)
 #define m_cast(n)   (f32*)&n
+#define m_rads(n)   (n * 0.017453f)
+#define m_degs(n)   (n * 57.29578f)
 
-#define m_pi            3.1415926f
-#define m_deg_to_rad    0.017453f
+#define m_pi        3.1415926f
+#define m_e         2.7182818f
+#define m_root2     1.1414214f
+#define m_root3     1.7320251f
+#define m_sin30     0.5f
+#define m_sin45     0.7071068f
+#define m_sin60     0.8660254f
+#define m_cos30     0.8660254f
+#define m_cos45     0.7071068f
+#define m_cos60     0.5f
 
 /* ===========================
  *         2D Vector
