@@ -281,21 +281,21 @@ mat4_rotate(mat4_t matrix,
 {
     vec3_t vec = {x, y, z};
     vec = vec3_normalize(vec);
-    f32 r_angle = m_rads(angle);
-    f32 c = m_cos(r_angle);
-    f32 s = m_sin(r_angle);
+    f32 c = m_cos(m_rads(angle));
+    f32 s = m_sin(m_rads(angle));
+    f32 c1 = 1 - c;
 
-    matrix.col1[0] = (vec.x * vec.x) + (1 - (vec.x * vec.x)) * c;
-    matrix.col1[1] = ((vec.x * vec.y) * (1 - c)) + vec.z * s;
-    matrix.col1[2] = ((vec.x * vec.z) * (1 - c)) - vec.y * s;
+    matrix.col1[0] = (c1 * vec.x * vec.x) + c;
+    matrix.col1[1] = (c1 * vec.x * vec.y) + s * vec.z;
+    matrix.col1[2] = (c1 * vec.x * vec.z) - s * vec.y;
 
-    matrix.col2[0] = ((vec.x * vec.y) * (1 - c)) - vec.z * s;
-    matrix.col2[1] = (vec.y * vec.y) + (1 - (vec.y * vec.y)) * c;
-    matrix.col2[2] = ((vec.y * vec.z) * (1 - c)) + vec.x * s;
+    matrix.col2[0] = (c1 * vec.x * vec.y) - s * vec.z;
+    matrix.col2[1] = (c1 * vec.y * vec.y) + c;
+    matrix.col2[2] = (c1 * vec.y * vec.z) + s * vec.x;
 
-    matrix.col3[0] = ((vec.x * vec.z) * (1 - c)) + vec.y * s;
-    matrix.col3[1] = ((vec.y * vec.z) * (1 - c)) - vec.x * s;
-    matrix.col3[2] = (vec.z * vec.z) + (1 - (vec.z * vec.z)) * c;
+    matrix.col3[0] = (c1 * vec.x * vec.z) + s * vec.y;
+    matrix.col3[1] = (c1 * vec.y * vec.z) - s * vec.x;
+    matrix.col3[2] = (c1 * vec.z * vec.z) + c;
 
     return matrix;
 }
@@ -317,7 +317,7 @@ mat4_perspective(mat4_t matrix,
     matrix.col3[2] = -1 * ((far + near) / (far - near));
     matrix.col3[3] = -1;
 
-    matrix.col4[2] = ((-2 * far * near) / (far - near));
+    matrix.col4[2] = ((-2.0f * far * near) / (far - near));
     matrix.col4[3] = 0;
 
     return matrix;
