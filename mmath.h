@@ -256,6 +256,28 @@ mat4_translate(mat4_t matrix,
     return matrix;
 }
 
+mat4_t
+mat4_translate_v(mat4_t matrix,
+                 const vec3_t vec)
+{
+    matrix.col4[0] = vec.x;
+    matrix.col4[1] = vec.y;
+    matrix.col4[2] = vec.z;
+
+    return matrix;
+}
+
+mat4_t
+mat4_translate_remove(mat4_t matrix)
+{
+    for(u8 i = 0; i < 3; i++)
+    {
+        matrix.col4[i] = 0.0f;
+    }
+
+    return matrix;
+}
+
 void
 mat4_print(mat4_t matrix)
 {
@@ -396,28 +418,6 @@ mat4_mult(const mat4_t m1,
     }
 
     return res;
-}
-
-mat4_t
-mat4_remove_translate(mat4_t matrix)
-{
-    for(u8 i = 0; i < 3; i++)
-    {
-        matrix.col4[i] = 0.0f;
-    }
-
-    return matrix;
-}
-
-mat4_t
-mat4_translate_v(mat4_t matrix,
-                const vec3_t vec)
-{
-    matrix.col4[0] = vec.x;
-    matrix.col4[1] = vec.y;
-    matrix.col4[2] = vec.z;
-
-    return matrix;
 }
 
 #endif // MMATH_H
