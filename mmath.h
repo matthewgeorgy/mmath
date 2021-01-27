@@ -153,16 +153,15 @@ vec3_sub(const vec3_t a,
 }
 
 vec3_t      
-vec3_scal(const vec3_t vec, 
+vec3_scal(vec3_t vec, 
           const f32 scalar)
 {
-    vec3_t new_vec;
+   
+    vec.x *= scalar;
+    vec.y *= scalar;
+    vec.z *= scalar;
 
-    new_vec.x = vec.x * scalar;
-    new_vec.y = vec.y * scalar;
-    new_vec.z = vec.z * scalar;
-
-    return new_vec;
+    return vec;
 }
 
 f32     
@@ -192,16 +191,15 @@ vec3_mag(const vec3_t vec)
 }
 
 vec3_t 
-vec3_normalize(const vec3_t vec)
+vec3_normalize(vec3_t vec)
 {
-    vec3_t norm_vec;
     f32 mag = vec3_mag(vec);
 
-    norm_vec.x = vec.x / mag;
-    norm_vec.y = vec.y / mag;
-    norm_vec.z = vec.z / mag;
+    vec.x /= mag;
+    vec.y /= mag;
+    vec.z /= mag;
 
-    return norm_vec;
+    return vec;
 }
 
 
@@ -325,7 +323,7 @@ mat4_rotate(mat4_t matrix,
 mat4_t
 mat4_rotate_v(mat4_t matrix, 
               const f32 angle,
-              const vec3_t vec)
+              vec3_t vec)
 {
     vec = vec3_normalize(vec);
     f32 c = m_cos(m_rads(angle));
@@ -354,17 +352,17 @@ mat4_perspective(mat4_t matrix,
                  const f32 near,
                  const f32 far)
 {
-    f32 r_fov = m_rads(fov);
-    f32 t = m_tan(r_fov / 2.0f);
+    f32 t = m_tan(m_rads(fov) / 2.0f);
+    f32 fdelta = far - near;
 
     matrix.col1[0] = 1 / (aspect_ratio * t);
 
     matrix.col2[1] = 1 / t;
 
-    matrix.col3[2] = -1 * ((far + near) / (far - near));
+    matrix.col3[2] = -1 * ((far + near) / fdelta);
     matrix.col3[3] = -1;
 
-    matrix.col4[2] = ((-2.0f * far * near) / (far - near));
+    matrix.col4[2] = ((-2.0f * far * near) / fdelta);
     matrix.col4[3] = 0;
 
     return matrix;
