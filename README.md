@@ -8,7 +8,7 @@ It's fully comptabile with OpenGL 4 + GLSL 4 and likely has some compatibility w
 The immediate question is: why write your own library? There are already math libraries out there, so why not use those?
 This is a reasonable question, and the answer has quite a few parts to it.
 
-1. Support for C
+##1. Support for C
 Simply put, GLM, one of the more commonly used libraries, is also header-only, but it is only compatible with C++. One of the most confusing things I faced when first
 discovering OpenGL was the fact that I never saw a single tutorial/guide/reference that covered OpenGL using C. The reason for this, as I have come to learn, is that most
 of these resources use GLM as their vector/matrix math library, which immediately forces you to use C++ whether you like it or not. It also doesn't help that GLM, reasonably
