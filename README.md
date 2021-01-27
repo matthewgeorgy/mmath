@@ -1,5 +1,5 @@
 # mmath
-c99 header-only vector math library
+
 Last updated: Jan 26th, 2021
 
 As mentioned in the description, this is my C99 header-only vector math library.
