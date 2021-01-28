@@ -232,7 +232,7 @@ mat4_identity(mat4_t matrix)
 {
     f32* ptr = m_cast(matrix);
 
-    for(u8 i = 0; i < 4; i++)
+    for (u8 i = 0; i < 4; i++)
     {
         *ptr = 1.0f;
         ptr += 5;
@@ -268,7 +268,7 @@ mat4_translate_v(mat4_t matrix,
 mat4_t
 mat4_translate_remove(mat4_t matrix)
 {
-    for(u8 i = 0; i < 3; i++)
+    for (u8 i = 0; i < 3; i++)
     {
         matrix.col4[i] = 0.0f;
     }
@@ -280,10 +280,10 @@ void
 mat4_print(mat4_t matrix)
 {
     f32* ptr = &matrix.col1[0];
-    for(u8 i = 0; i < 4; i++)
+    for (u8 i = 0; i < 4; i++)
     {
         ptr = &matrix.col1[i];
-        for(u8 j = 0; j < 4; j++)
+        for (u8 j = 0; j < 4; j++)
         {
             printf("%f ", *ptr);
             ptr += 4;
@@ -408,7 +408,7 @@ mat4_scale(mat4_t matrix,
 {
     f32* ptr = m_cast(matrix);
 
-    for(u8 i = 0; i < 3; i++)
+    for (u8 i = 0; i < 3; i++)
     {
         *ptr = scale_value;
         ptr += 5;
@@ -427,12 +427,12 @@ mat4_mult(const mat4_t m1,
     f32* p2 = m_cast(m2);
     f32* pres = m_cast(res);
 
-    for(u8 y = 0; y < 4; y++)
+    for (u8 y = 0; y < 4; y++)
     {
-        for(u8 x = 0; x < 4; x++)
+        for (u8 x = 0; x < 4; x++)
         {
             f32 sum = 0.0f;
-            for(u8 e = 0; e < 4; e++)
+            for (u8 e = 0; e < 4; e++)
             {
                 sum += p1[x + e * 4] * p2[e + y * 4];
             }
