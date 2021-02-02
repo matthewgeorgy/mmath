@@ -293,17 +293,17 @@ mat4_print(mat4_t matrix)
 } 
 
 mat4_t
-mat4_rotate(mat4_t matrix, 
-            const f32 angle, 
+mat4_rotate(const f32 angle, 
             const f32 x, 
             const f32 y, 
             const f32 z)
 {
-    vec3_t vec = {x, y, z};
-    vec = vec3_normalize(vec);
+    vec3_t vec = vec3_normalize({x, y, z});
     f32 c = m_cos(m_rads(angle));
     f32 s = m_sin(m_rads(angle));
     f32 c1 = 1 - c;
+
+    mat4_t matrix = mat4_ctor();
 
     matrix.col1[0] = (c1 * vec.x * vec.x) + c;
     matrix.col1[1] = (c1 * vec.x * vec.y) + s * vec.z;
@@ -317,12 +317,13 @@ mat4_rotate(mat4_t matrix,
     matrix.col3[1] = (c1 * vec.y * vec.z) - s * vec.x;
     matrix.col3[2] = (c1 * vec.z * vec.z) + c;
 
+    matrix.col4[3] = 1.0f;
+
     return matrix;
 }
 
 mat4_t
-mat4_rotate_v(mat4_t matrix, 
-              const f32 angle,
+mat4_rotate_v(const f32 angle,
               vec3_t vec)
 {
     vec = vec3_normalize(vec);
@@ -330,6 +331,8 @@ mat4_rotate_v(mat4_t matrix,
     f32 s = m_sin(m_rads(angle));
     f32 c1 = 1 - c;
 
+    mat4_t matrix = mat4_ctor();
+
     matrix.col1[0] = (c1 * vec.x * vec.x) + c;
     matrix.col1[1] = (c1 * vec.x * vec.y) + s * vec.z;
     matrix.col1[2] = (c1 * vec.x * vec.z) - s * vec.y;
@@ -342,18 +345,21 @@ mat4_rotate_v(mat4_t matrix,
     matrix.col3[1] = (c1 * vec.y * vec.z) - s * vec.x;
     matrix.col3[2] = (c1 * vec.z * vec.z) + c;
 
+    matrix.col4[3] = 1.0f;
+
     return matrix;
 }
 
 mat4_t
-mat4_perspective(mat4_t matrix,
-                 const f32 fov,
+mat4_perspective(const f32 fov,
                  const f32 aspect_ratio,
                  const f32 near,
                  const f32 far)
 {
     f32 t = m_tan(m_rads(fov) / 2.0f);
     f32 fdelta = far - near;
+    
+    mat4_t matrix = mat4_ctor();
 
     matrix.col1[0] = 1 / (aspect_ratio * t);
 
@@ -363,7 +369,6 @@ mat4_perspective(mat4_t matrix,
     matrix.col3[3] = -1;
 
     matrix.col4[2] = ((-2.0f * far * near) / fdelta);
-    matrix.col4[3] = 0;
 
     return matrix;
 }
@@ -403,9 +408,9 @@ mat4_lookat(const vec3_t eye,
 }
 
 mat4_t
-mat4_scale(mat4_t matrix,
-           const f32 scale_value)
+mat4_scale(const f32 scale_value)
 {
+    mat4_t matrix = mat4_identity(mat4_ctor());
     f32* ptr = m_cast(matrix);
 
     for (u8 i = 0; i < 3; i++)
@@ -422,7 +427,7 @@ mat4_t
 mat4_mult(const mat4_t m1,
           const mat4_t m2)
 {
-    mat4_t res = mat4_ctor();
+    mat4_t res;
     f32* p1 = m_cast(m1);
     f32* p2 = m_cast(m2);
     f32* pres = m_cast(res);
