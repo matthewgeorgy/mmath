@@ -242,11 +242,12 @@ mat4_identity(mat4_t matrix)
 }
 
 mat4_t
-mat4_translate(mat4_t matrix, 
-               const f32 x,
+mat4_translate(const f32 x,
                const f32 y,
                const f32 z)
 {
+    mat4_t matrix = mat4_identity(mat4_ctor());
+
     matrix.col4[0] = x;
     matrix.col4[1] = y;
     matrix.col4[2] = z;
@@ -255,9 +256,10 @@ mat4_translate(mat4_t matrix,
 }
 
 mat4_t
-mat4_translate_v(mat4_t matrix,
-                 const vec3_t vec)
+mat4_translate_v(const vec3_t vec)
 {
+    mat4_t matrix = mat4_identity(mat4_ctor());
+
     matrix.col4[0] = vec.x;
     matrix.col4[1] = vec.y;
     matrix.col4[2] = vec.z;
