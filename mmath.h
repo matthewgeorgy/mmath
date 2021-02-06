@@ -218,20 +218,9 @@ typedef struct MAT4
 } mat4_t;
 
 mat4_t
-mat4_ctor(void)
-{
-    mat4_t matrix;
-
-    memset(&matrix, 0, 16 * sizeof(f32));
-
-    return matrix;
-}
-
-mat4_t
 mat4_identity(void)
 {
-    mat4_t matrix;
-    memset(&matrix, 0, sizeof(mat4_t));
+    mat4_t matrix = {};
     f32* ptr = m_cast(matrix);
 
     for (u8 i = 0; i < 4; i++)
@@ -307,7 +296,8 @@ mat4_rotate(const f32 angle,
     f32 s = m_sin(m_rads(angle));
     f32 c1 = 1 - c;
 
-    mat4_t matrix = mat4_ctor();
+    // TODO: OPTIMIZE!!!
+    mat4_t matrix = {};
 
     matrix.col1[0] = (c1 * vec.x * vec.x) + c;
     matrix.col1[1] = (c1 * vec.x * vec.y) + s * vec.z;
@@ -335,7 +325,8 @@ mat4_rotate_v(const f32 angle,
     f32 s = m_sin(m_rads(angle));
     f32 c1 = 1 - c;
 
-    mat4_t matrix = mat4_ctor();
+    // TODO: OPTIMIZE!!!
+    mat4_t matrix = {};
 
     matrix.col1[0] = (c1 * vec.x * vec.x) + c;
     matrix.col1[1] = (c1 * vec.x * vec.y) + s * vec.z;
@@ -363,7 +354,7 @@ mat4_perspective(const f32 fov,
     f32 t = m_tan(m_rads(fov) / 2.0f);
     f32 fdelta = far - near;
     
-    mat4_t matrix = mat4_ctor();
+    mat4_t matrix = {};
 
     matrix.col1[0] = 1 / (aspect_ratio * t);
 
