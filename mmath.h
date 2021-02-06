@@ -228,8 +228,10 @@ mat4_ctor(void)
 }
 
 mat4_t
-mat4_identity(mat4_t matrix)
+mat4_identity(void)
 {
+    mat4_t matrix;
+    memset(&matrix, 0, sizeof(mat4_t));
     f32* ptr = m_cast(matrix);
 
     for (u8 i = 0; i < 4; i++)
@@ -246,7 +248,7 @@ mat4_translate(const f32 x,
                const f32 y,
                const f32 z)
 {
-    mat4_t matrix = mat4_identity(mat4_ctor());
+    mat4_t matrix = mat4_identity();
 
     matrix.col4[0] = x;
     matrix.col4[1] = y;
@@ -258,7 +260,7 @@ mat4_translate(const f32 x,
 mat4_t
 mat4_translate_v(const vec3_t vec)
 {
-    mat4_t matrix = mat4_identity(mat4_ctor());
+    mat4_t matrix = mat4_identity();
 
     matrix.col4[0] = vec.x;
     matrix.col4[1] = vec.y;
@@ -412,7 +414,7 @@ mat4_lookat(const vec3_t eye,
 mat4_t
 mat4_scale(const f32 scale_value)
 {
-    mat4_t matrix = mat4_identity(mat4_ctor());
+    mat4_t matrix = mat4_identity();
     f32* ptr = m_cast(matrix);
 
     for (u8 i = 0; i < 3; i++)
