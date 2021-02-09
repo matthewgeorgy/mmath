@@ -12,7 +12,7 @@
 #define m_tan(n)    tanf(n)
 #define m_sqrt(n)   sqrtf(n)
 #define m_log(n)    logf(n)
-#define m_cast(n)   (f32*)&n
+#define m_cast(n)   (f32 *)&n
 #define m_rads(n)   (n * 0.017453f)
 #define m_degs(n)   (n * 57.29578f)
 
@@ -156,7 +156,6 @@ vec3_t
 vec3_scal(vec3_t vec, 
           const f32 scalar)
 {
-   
     vec.x *= scalar;
     vec.y *= scalar;
     vec.z *= scalar;
@@ -221,7 +220,7 @@ mat4_t
 mat4_identity(void)
 {
     mat4_t matrix = {};
-    f32* ptr = m_cast(matrix);
+    f32 *ptr = m_cast(matrix);
 
     for (u8 i = 0; i < 4; i++)
     {
@@ -272,7 +271,8 @@ mat4_translate_remove(mat4_t matrix)
 void
 mat4_print(mat4_t matrix)
 {
-    f32* ptr = &matrix.col1[0];
+    f32 *ptr;
+
     for (u8 i = 0; i < 4; i++)
     {
         ptr = &matrix.col1[i];
@@ -405,8 +405,8 @@ mat4_lookat(const vec3_t eye,
 mat4_t
 mat4_scale(const f32 scale_value)
 {
-    mat4_t matrix = mat4_identity();
-    f32* ptr = m_cast(matrix);
+    mat4_t matrix = {};
+    f32 *ptr = m_cast(matrix);
 
     for (u8 i = 0; i < 3; i++)
     {
@@ -423,9 +423,9 @@ mat4_mult(const mat4_t m1,
           const mat4_t m2)
 {
     mat4_t res;
-    f32* p1 = m_cast(m1);
-    f32* p2 = m_cast(m2);
-    f32* pres = m_cast(res);
+    f32 *p1 = m_cast(m1);
+    f32 *p2 = m_cast(m2);
+    f32 *pres = m_cast(res);
 
     for (u8 y = 0; y < 4; y++)
     {
