@@ -32,7 +32,7 @@
  * ===========================
  * */
 
-typedef struct VEC2D
+typedef struct _TAG_vec2
 {
     f32 x;
     f32 y;
@@ -119,7 +119,7 @@ vec2_rotate(const vec2_t vec,
  * ===========================
  * */
 
-typedef struct VEC3D
+typedef struct _TAG_vec3
 {
     f32 x;
     f32 y;
@@ -208,7 +208,7 @@ vec3_normalize(vec3_t vec)
  * ===========================
  * */
 
-typedef struct MAT4
+typedef struct _TAG_mat4
 {
     f32 col1[4];
     f32 col2[4];
