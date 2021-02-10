@@ -32,53 +32,47 @@
  * ===========================
  * */
 
-typedef struct VEC2D
+typedef struct _TAG_vec2
 {
     f32 x;
     f32 y;
 } vec2_t;
 
 vec2_t      
-vec2_add(vec2_t a, 
-         vec2_t b)
+vec2_add(vec2_t v1, 
+         vec2_t v2)
 {
-    vec2_t vec;
+    v1.x += v2.x;
+    v1.y += v2.y;
 
-    vec.x = a.x + b.x;
-    vec.y = a.y + b.y;
-
-    return vec;
+    return v1;
 }
 
 vec2_t      
-vec2_sub(vec2_t a, 
-         vec2_t b)
+vec2_sub(vec2_t v1, 
+         vec2_t v2)
 {
-    vec2_t vec;
+    v1.x -= v2.x;
+    v1.y -= v2.y;
 
-    vec.x = a.x - b.x;
-    vec.y = a.y - b.y;
-
-    return vec;
+    return v1;
 }
 
 vec2_t      
 vec2_scal(vec2_t vec, 
           f32 scalar)
 {
-    vec2_t new_vec;
+    vec.x *= scalar;
+    vec.y *= scalar;
 
-    new_vec.x = vec.x * scalar;
-    new_vec.y = vec.y * scalar;
-
-    return new_vec;
+    return vec;
 }
 
 f32         
-vec2_dot(vec2_t a, 
-         vec2_t b)
+vec2_dot(vec2_t v1, 
+         vec2_t v2)
 {
-    return (a.x * b.x + a.y * b.y);
+    return (v1.x * v2.x + v1.y * v2.y);
 }
 
 f32         
@@ -90,28 +84,26 @@ vec2_mag(vec2_t vec)
 vec2_t      
 vec2_normalize(vec2_t vec)
 {
-    vec2_t norm_vec;
     f32 mag = vec2_mag(vec);
 
-    norm_vec.x = vec.x / mag;
-    norm_vec.y = vec.y / mag;
+    vec.x /= mag;
+    vec.y /= mag;
 
-    return norm_vec;
+    return vec;
 }
 
 vec2_t      
 vec2_rotate(vec2_t vec, 
             f32 angle)
 {
-    vec2_t rot_vec;
     f32 r_angle = m_rads(angle);
     f32 c = m_cos(r_angle);
     f32 s = m_sin(r_angle);
 
-    rot_vec.x = ((vec.x * c) - (vec.y * s));
-    rot_vec.y = ((vec.x * s) + (vec.y * c));
+    vec.x = ((vec.x * c) - (vec.y * s));
+    vec.y = ((vec.x * s) + (vec.y * c));
 
-    return rot_vec;
+    return vec;
 }
 
 /* ===========================
@@ -119,7 +111,7 @@ vec2_rotate(vec2_t vec,
  * ===========================
  * */
 
-typedef struct VEC3D
+typedef struct _TAG_vec3
 {
     f32 x;
     f32 y;
@@ -127,29 +119,25 @@ typedef struct VEC3D
 } vec3_t;
 
 vec3_t      
-vec3_add(vec3_t a, 
-         vec3_t b)
+vec3_add(vec3_t v1, 
+         vec3_t v2)
 {
-    vec3_t vec;
+    v1.x += v2.x;
+    v1.y += v2.y;
+    v1.z += v2.z;
 
-    vec.x = a.x + b.x;
-    vec.y = a.y + b.y;
-    vec.z = a.z + b.z;
-
-    return vec;
+    return v1;
 }
 
 vec3_t      
-vec3_sub(vec3_t a, 
-         vec3_t b)
+vec3_sub(vec3_t v1, 
+         vec3_t v2)
 {
-    vec3_t vec;
+    v1.x += v2.x;
+    v1.y += v2.y;
+    v1.z += v2.z;
 
-    vec.x = a.x - b.x;
-    vec.y = a.y - b.y;
-    vec.z = a.z - b.z;
-
-    return vec;
+    return v1;
 }
 
 vec3_t      
@@ -171,14 +159,14 @@ vec3_dot(vec3_t a,
 }
 
 vec3_t      
-vec3_cross(vec3_t a,
-           vec3_t b)
+vec3_cross(vec3_t v1,
+           vec3_t v2)
 {
     vec3_t cross_prod;
     
-    cross_prod.x = (a.y * b.z) - (a.z * b.y);
-    cross_prod.y = (a.z * b.x) - (a.x * b.z);
-    cross_prod.z = (a.x * b.y) - (a.y * b.x);
+    cross_prod.x = (v1.y * v2.z) - (v1.z * v2.y);
+    cross_prod.y = (v1.z * v2.x) - (v1.x * v2.z);
+    cross_prod.z = (v1.x * v2.y) - (v1.y * v2.x);
 
     return cross_prod;
 }
@@ -208,7 +196,7 @@ vec3_normalize(vec3_t vec)
  * ===========================
  * */
 
-typedef struct MAT4
+typedef struct _TAG_mat4
 {
     f32 col1[4];
     f32 col2[4];
