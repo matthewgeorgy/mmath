@@ -32,15 +32,15 @@
  * ===========================
  * */
 
-typedef struct _TAG_vec2
+typedef struct VEC2D
 {
     f32 x;
     f32 y;
 } vec2_t;
 
 vec2_t      
-vec2_add(const vec2_t a, 
-         const vec2_t b)
+vec2_add(vec2_t a, 
+         vec2_t b)
 {
     vec2_t vec;
 
@@ -51,8 +51,8 @@ vec2_add(const vec2_t a,
 }
 
 vec2_t      
-vec2_sub(const vec2_t a, 
-         const vec2_t b)
+vec2_sub(vec2_t a, 
+         vec2_t b)
 {
     vec2_t vec;
 
@@ -63,8 +63,8 @@ vec2_sub(const vec2_t a,
 }
 
 vec2_t      
-vec2_scal(const vec2_t vec, 
-          const f32 scalar)
+vec2_scal(vec2_t vec, 
+          f32 scalar)
 {
     vec2_t new_vec;
 
@@ -75,20 +75,20 @@ vec2_scal(const vec2_t vec,
 }
 
 f32         
-vec2_dot(const vec2_t a, 
-         const vec2_t b)
+vec2_dot(vec2_t a, 
+         vec2_t b)
 {
     return (a.x * b.x + a.y * b.y);
 }
 
 f32         
-vec2_mag(const vec2_t vec)
+vec2_mag(vec2_t vec)
 {
     return m_sqrt(vec.x * vec.x + vec.y * vec.y);
 }
 
 vec2_t      
-vec2_normalize(const vec2_t vec)
+vec2_normalize(vec2_t vec)
 {
     vec2_t norm_vec;
     f32 mag = vec2_mag(vec);
@@ -100,8 +100,8 @@ vec2_normalize(const vec2_t vec)
 }
 
 vec2_t      
-vec2_rotate(const vec2_t vec, 
-            const f32 angle)
+vec2_rotate(vec2_t vec, 
+            f32 angle)
 {
     vec2_t rot_vec;
     f32 r_angle = m_rads(angle);
@@ -119,7 +119,7 @@ vec2_rotate(const vec2_t vec,
  * ===========================
  * */
 
-typedef struct _TAG_vec3
+typedef struct VEC3D
 {
     f32 x;
     f32 y;
@@ -127,8 +127,8 @@ typedef struct _TAG_vec3
 } vec3_t;
 
 vec3_t      
-vec3_add(const vec3_t a, 
-         const vec3_t b)
+vec3_add(vec3_t a, 
+         vec3_t b)
 {
     vec3_t vec;
 
@@ -140,8 +140,8 @@ vec3_add(const vec3_t a,
 }
 
 vec3_t      
-vec3_sub(const vec3_t a, 
-         const vec3_t b)
+vec3_sub(vec3_t a, 
+         vec3_t b)
 {
     vec3_t vec;
 
@@ -154,7 +154,7 @@ vec3_sub(const vec3_t a,
 
 vec3_t      
 vec3_scal(vec3_t vec, 
-          const f32 scalar)
+          f32 scalar)
 {
     vec.x *= scalar;
     vec.y *= scalar;
@@ -164,15 +164,15 @@ vec3_scal(vec3_t vec,
 }
 
 f32     
-vec3_dot(const vec3_t a, 
-         const vec3_t b)
+vec3_dot(vec3_t a, 
+         vec3_t b)
 {
     return (a.x * b.x + a.y * b.y + a.z * b.z);
 }
 
 vec3_t      
-vec3_cross(const vec3_t a,
-           const vec3_t b)
+vec3_cross(vec3_t a,
+           vec3_t b)
 {
     vec3_t cross_prod;
     
@@ -184,7 +184,7 @@ vec3_cross(const vec3_t a,
 }
 
 f32
-vec3_mag(const vec3_t vec)
+vec3_mag(vec3_t vec)
 {
     return m_sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
 }
@@ -208,7 +208,7 @@ vec3_normalize(vec3_t vec)
  * ===========================
  * */
 
-typedef struct _TAG_mat4
+typedef struct MAT4
 {
     f32 col1[4];
     f32 col2[4];
@@ -232,9 +232,9 @@ mat4_identity(void)
 }
 
 mat4_t
-mat4_translate(const f32 x,
-               const f32 y,
-               const f32 z)
+mat4_translate(f32 x,
+               f32 y,
+               f32 z)
 {
     mat4_t matrix = mat4_identity();
 
@@ -246,7 +246,7 @@ mat4_translate(const f32 x,
 }
 
 mat4_t
-mat4_translate_v(const vec3_t vec)
+mat4_translate_v(vec3_t vec)
 {
     mat4_t matrix = mat4_identity();
 
@@ -286,10 +286,10 @@ mat4_print(mat4_t matrix)
 } 
 
 mat4_t
-mat4_rotate(const f32 angle, 
-            const f32 x, 
-            const f32 y, 
-            const f32 z)
+mat4_rotate(f32 angle, 
+            f32 x, 
+            f32 y, 
+            f32 z)
 {
     vec3_t vec = vec3_normalize({x, y, z});
     f32 c = m_cos(m_rads(angle));
@@ -317,7 +317,7 @@ mat4_rotate(const f32 angle,
 }
 
 mat4_t
-mat4_rotate_v(const f32 angle,
+mat4_rotate_v(f32 angle,
               vec3_t vec)
 {
     vec = vec3_normalize(vec);
@@ -346,10 +346,10 @@ mat4_rotate_v(const f32 angle,
 }
 
 mat4_t
-mat4_perspective(const f32 fov,
-                 const f32 aspect_ratio,
-                 const f32 near,
-                 const f32 far)
+mat4_perspective(f32 fov,
+                 f32 aspect_ratio,
+                 f32 near,
+                 f32 far)
 {
     f32 t = m_tan(m_rads(fov) / 2.0f);
     f32 fdelta = far - near;
@@ -369,9 +369,9 @@ mat4_perspective(const f32 fov,
 }
 
 mat4_t
-mat4_lookat(const vec3_t eye, 
-            const vec3_t center, 
-            const vec3_t up)
+mat4_lookat(vec3_t eye, 
+            vec3_t center, 
+            vec3_t up)
 {
     const vec3_t f = vec3_normalize(vec3_sub(center, eye));  
     const vec3_t s = vec3_normalize(vec3_cross(f, up));
@@ -403,7 +403,7 @@ mat4_lookat(const vec3_t eye,
 }
 
 mat4_t
-mat4_scale(const f32 scale_value)
+mat4_scale(f32 scale_value)
 {
     mat4_t matrix = {};
     f32 *ptr = m_cast(matrix);
@@ -419,8 +419,8 @@ mat4_scale(const f32 scale_value)
 }
 
 mat4_t
-mat4_mult(const mat4_t m1,
-          const mat4_t m2)
+mat4_mult(mat4_t m1,
+          mat4_t m2)
 {
     mat4_t res;
     f32 *p1 = m_cast(m1);
