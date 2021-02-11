@@ -2,30 +2,16 @@
 #define MMATH_H
 
 #include <stdio.h>
-#include <string.h>
 #include <math.h>
-
 #include "types.h"
 
 #define m_sin(n)    sinf(n)
 #define m_cos(n)    cosf(n)
 #define m_tan(n)    tanf(n)
 #define m_sqrt(n)   sqrtf(n)
-#define m_log(n)    logf(n)
 #define m_cast(n)   (f32 *)&n
 #define m_rads(n)   (n * 0.017453f)
 #define m_degs(n)   (n * 57.29578f)
-
-#define m_pi        3.1415926f
-#define m_e         2.7182818f
-#define m_root2     1.1414214f
-#define m_root3     1.7320251f
-#define m_sin30     0.5f
-#define m_sin45     0.7071068f
-#define m_sin60     0.8660254f
-#define m_cos30     0.8660254f
-#define m_cos45     0.7071068f
-#define m_cos60     0.5f
 
 /* ===========================
  *         2D Vector
@@ -72,13 +58,13 @@ f32
 vec2_dot(vec2_t v1, 
          vec2_t v2)
 {
-    return (v1.x * v2.x + v1.y * v2.y);
+    return ((v1.x * v2.x) + (v1.y * v2.y));
 }
 
 f32         
 vec2_mag(vec2_t vec)
 {
-    return m_sqrt(vec.x * vec.x + vec.y * vec.y);
+    return m_sqrt((vec.x * vec.x) + (vec.y * vec.y));
 }
 
 vec2_t      
@@ -105,6 +91,8 @@ vec2_rotate(vec2_t vec,
 
     return vec;
 }
+
+
 
 /* ===========================
  *         3D Vector
@@ -174,7 +162,7 @@ vec3_cross(vec3_t v1,
 f32
 vec3_mag(vec3_t vec)
 {
-    return m_sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
+    return m_sqrt((vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z));
 }
 
 vec3_t 
@@ -284,7 +272,6 @@ mat4_rotate(f32 angle,
     f32 s = m_sin(m_rads(angle));
     f32 c1 = 1 - c;
 
-    // TODO: OPTIMIZE!!!
     mat4_t matrix = {};
 
     matrix.col1[0] = (c1 * vec.x * vec.x) + c;
@@ -313,7 +300,6 @@ mat4_rotate_v(f32 angle,
     f32 s = m_sin(m_rads(angle));
     f32 c1 = 1 - c;
 
-    // TODO: OPTIMIZE!!!
     mat4_t matrix = {};
 
     matrix.col1[0] = (c1 * vec.x * vec.x) + c;
