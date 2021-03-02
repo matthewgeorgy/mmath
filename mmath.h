@@ -13,16 +13,76 @@
 #define m_rads(n)   (n * 0.017453f)
 #define m_degs(n)   (n * 57.29578f)
 
-/* ===========================
- *         2D Vector
- * ===========================
- * */
+/* ============================ *
+ * =====    Vector2D      ===== *
+ * ============================ */
 
 typedef struct _TAG_vec2
 {
     f32 x;
     f32 y;
 } vec2_t;
+
+vec2_t      vec2_add(vec2_t v1, vec2_t v2);
+vec2_t      vec2_sub(vec2_t v1, vec2_t v2);
+vec2_t      vec2_scal(vec2_t vec, f32 scalar);
+f32         vec2_dot(vec2_t v1, vec2_t v2);
+f32         vec2_mag(vec2_t vec);
+vec2_t      vec2_normalize(vec2_t vec);
+vec2_t      vec2_rotate(vec2_t vec, f32 angle);
+
+/* ============================ *
+ * =====    Vector3D      ===== *
+ * ============================ */
+
+typedef struct _TAG_vec3
+{
+    f32 x;
+    f32 y;
+    f32 z;
+} vec3_t;
+
+vec3_t      vec3_add(vec3_t v1, vec3_t v2);
+vec3_t      vec3_sub(vec3_t v1, vec3_t v2);
+vec3_t      vec3_scal(vec3_t vec, f32 scalar);
+f32         vec3_dot(vec3_t v1, vec3_t v2);
+vec3_t      vec3_cross(vec3_t v1, vec3_t v2);
+f32         vec3_mag(vec3_t vec);
+vec3_t      vec3_normalize(vec3_t vec);
+
+/* ============================ *
+ * =====    MATRIX4       ===== *
+ * ============================ */
+
+typedef struct _TAG_mat4
+{
+    f32 col1[4];
+    f32 col2[4];
+    f32 col3[4];
+    f32 col4[4];
+} mat4_t;
+
+mat4_t      mat4_identity(void);
+mat4_t      mat4_translate(f32 x, f32 y, f32 z);
+mat4_t      mat4_translate_v(vec3_t vec);
+mat4_t      mat4_translate_remove(mat4_t matrix);
+void        mat4_print(mat4_t matrix);
+mat4_t      mat4_rotate(f32 angle, f32 x, f32 y, f32 z);
+mat4_t      mat4_rotate_v(f32 angle, vec3_t vec);
+mat4_t      mat4_perspective(f32 fov, f32 aspect_ratio, f32 near, f32 far);
+mat4_t      mat4_lookat(vec3_t eye, vec3_t center, vec3_t up);
+mat4_t      mat4_scale(f32 scale_value);
+mat4_t      mat4_mult(mat4_t m1, mat4_t m2);
+
+
+////////////////////////////////////////////////////////////////////////////////
+// ====== MMATH IMPLEMENTATION ================================================/
+////////////////////////////////////////////////////////////////////////////////
+
+#ifdef MMATH_IMPL
+
+////////////////////////////////////////////////////////////////////////////////
+// VECTOR2D IMPLEMENTATION
 
 vec2_t      
 vec2_add(vec2_t v1, 
@@ -92,19 +152,8 @@ vec2_rotate(vec2_t vec,
     return vec;
 }
 
-
-
-/* ===========================
- *         3D Vector
- * ===========================
- * */
-
-typedef struct _TAG_vec3
-{
-    f32 x;
-    f32 y;
-    f32 z;
-} vec3_t;
+////////////////////////////////////////////////////////////////////////////////
+// VECTOR3D IMPLEMENTATION
 
 vec3_t      
 vec3_add(vec3_t v1, 
@@ -177,20 +226,8 @@ vec3_normalize(vec3_t vec)
     return vec;
 }
 
-
-
-/* ===========================
- *          Matrix4 
- * ===========================
- * */
-
-typedef struct _TAG_mat4
-{
-    f32 col1[4];
-    f32 col2[4];
-    f32 col3[4];
-    f32 col4[4];
-} mat4_t;
+////////////////////////////////////////////////////////////////////////////////
+// MATRIX4 IMPLEMENTATION
 
 mat4_t
 mat4_identity(void)
@@ -416,5 +453,7 @@ mat4_mult(mat4_t m1,
 
     return res;
 }
+#endif // MMATH_IMPL
 
 #endif // MMATH_H
+
