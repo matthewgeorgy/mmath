@@ -304,7 +304,8 @@ mat4_rotate(f32 angle,
             f32 y, 
             f32 z)
 {
-    vec3_t vec = vec3_normalize({x, y, z});
+    vec3_t vec = {x, y, z};
+    vec = vec3_normalize(vec);
     f32 c = m_cos(m_rads(angle));
     f32 s = m_sin(m_rads(angle));
     f32 c1 = 1 - c;
