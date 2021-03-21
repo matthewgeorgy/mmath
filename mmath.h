@@ -8,7 +8,6 @@
 #define m_sin(n)    sinf(n)
 #define m_cos(n)    cosf(n)
 #define m_tan(n)    tanf(n)
-#define m_sqrt(n)   sqrtf(n)
 #define m_cast(n)   (f32 *)&n
 #define m_rads(n)   (n * 0.017453f)
 #define m_degs(n)   (n * 57.29578f)
@@ -85,7 +84,8 @@ mat4_t      mat4_mult(mat4_t m1, mat4_t m2);
 
 u32			m_randi(u32 index);
 f32			m_randf(u32 index);
-f32			m_isqrt(f32 number);
+f32			m_qsqrt(f32 number);
+f32			m_qsqrtinv(f32 number);
 
 ////////////////////////////////////////////////////////////////////////////////
 // ====== MMATH IMPLEMENTATION ================================================/
@@ -485,20 +485,37 @@ m_randf(u32 index)
 }
 
 f32
-m_isqrt(f32 number)
+m_sqrt(f32 number)
 {
 	int		i;
 	f32		x2, y;
 
 	x2 = number * 0.5f;
 	y = number;
-	i = *(int *)&y;
-	i = 0x5F3759DF - (i >> 1);
+	i = *(int *)&y;					// evil floating point bit hack
+	i = 0x5F3759DF - (i >> 1);		// what the fuck?
 	y = *(f32 *)&i;
-	y = y * (1.5f - (x2 * y * y));
-	y = y * (1.5f - (x2 * y * y));
+	y = y * (1.5f - (x2 * y * y));	// 1st iteration
+	y = y * (1.5f - (x2 * y * y));	// 2nd iteration
 
 	return number * y;
+}
+
+f32
+m_invsqrt(f32 number)
+{
+	int		i;
+	f32		x2, y;
+
+	x2 = number * 0.5f;
+	y = number;
+	i = *(int *)&y;					// evil floating point bit hack
+	i = 0x5F3759DF - (i >> 1);		// what the fuck?
+	y = *(f32 *)&i;
+	y = y * (1.5f - (x2 * y * y));	// 1st iteration
+	y = y * (1.5f - (x2 * y * y));	// 2nd iteration
+
+	return y;				// multiply by original num to reverse and get sqrt
 }
 
 #endif // MMATH_IMPL
