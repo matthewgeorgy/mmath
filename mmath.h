@@ -13,6 +13,11 @@
 #define m_rads(n)   (n * 0.017453f)
 #define m_degs(n)   (n * 57.29578f)
 
+// TODO: Add RNG functions (randi, randf, etc.)
+// TODO: Add Quake III inv sqrt function
+//        -> maybe test more to see if this yields perf. improvements
+// TODO: maybe sort functions in alphabetical order???
+
 /* ============================ *
  * =====    Vector2D      ===== *
  * ============================ */
@@ -74,6 +79,13 @@ mat4_t      mat4_lookat(vec3_t eye, vec3_t center, vec3_t up);
 mat4_t      mat4_scale(f32 scale_value);
 mat4_t      mat4_mult(mat4_t m1, mat4_t m2);
 
+/* ============================ *
+ * =====      MISC		  ===== *
+ * ============================ */
+
+u32			m_randi(u32 index);
+f32			m_randf(u32 index);
+f32			m_isqrt(f32 number);
 
 ////////////////////////////////////////////////////////////////////////////////
 // ====== MMATH IMPLEMENTATION ================================================/
@@ -232,7 +244,7 @@ vec3_normalize(vec3_t vec)
 mat4_t
 mat4_identity(void)
 {
-    mat4_t matrix = {};
+    mat4_t matrix = {0};
     f32 *ptr = m_cast(matrix);
 
     for (u8 i = 0; i < 4; i++)
@@ -310,7 +322,7 @@ mat4_rotate(f32 angle,
     f32 s = m_sin(m_rads(angle));
     f32 c1 = 1 - c;
 
-    mat4_t matrix = {};
+    mat4_t matrix = {0};
 
     matrix.col1[0] = (c1 * vec.x * vec.x) + c;
     matrix.col1[1] = (c1 * vec.x * vec.y) + s * vec.z;
@@ -338,7 +350,7 @@ mat4_rotate_v(f32 angle,
     f32 s = m_sin(m_rads(angle));
     f32 c1 = 1 - c;
 
-    mat4_t matrix = {};
+    mat4_t matrix = {0};
 
     matrix.col1[0] = (c1 * vec.x * vec.x) + c;
     matrix.col1[1] = (c1 * vec.x * vec.y) + s * vec.z;
@@ -366,7 +378,7 @@ mat4_perspective(f32 fov,
     f32 t = m_tan(m_rads(fov) / 2.0f);
     f32 fdelta = far - near;
     
-    mat4_t matrix = {};
+    mat4_t matrix = {0};
 
     matrix.col1[0] = 1 / (aspect_ratio * t);
 
@@ -417,7 +429,7 @@ mat4_lookat(vec3_t eye,
 mat4_t
 mat4_scale(f32 scale_value)
 {
-    mat4_t matrix = {};
+    mat4_t matrix = {0};
     f32 *ptr = m_cast(matrix);
 
     for (u8 i = 0; i < 3; i++)
@@ -454,6 +466,41 @@ mat4_mult(mat4_t m1,
 
     return res;
 }
+
+////////////////////////////////////////////////////////////////////////////////
+// MISC IMPLEMENTATION
+
+u32
+m_randi(u32 index)
+{
+	index = (index << 13) ^ index;
+	return ((index * (index * index * 15731 + 789221) + 1376312589) & 0x7FFFFFFF);
+}
+
+f32
+m_randf(u32 index)
+{
+	index = (index << 13) ^ index;
+	return (((index * (index * index * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0f) * 0.5f;
+}
+
+f32
+m_isqrt(f32 number)
+{
+	int		i;
+	f32		x2, y;
+
+	x2 = number * 0.5f;
+	y = number;
+	i = *(int *)&y;
+	i = 0x5F3759DF - (i >> 1);
+	y = *(f32 *)&i;
+	y = y * (1.5f - (x2 * y * y));
+	y = y * (1.5f - (x2 * y * y));
+
+	return number * y;
+}
+
 #endif // MMATH_IMPL
 
 #endif // MMATH_H
