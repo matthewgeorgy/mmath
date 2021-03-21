@@ -84,8 +84,8 @@ mat4_t      mat4_mult(mat4_t m1, mat4_t m2);
 
 u32			m_randi(u32 index);
 f32			m_randf(u32 index);
-f32			m_qsqrt(f32 number);
-f32			m_qsqrtinv(f32 number);
+f32			m_sqrt(f32 number);
+f32			m_isqrt(f32 number);
 
 ////////////////////////////////////////////////////////////////////////////////
 // ====== MMATH IMPLEMENTATION ================================================/
@@ -142,10 +142,10 @@ vec2_mag(vec2_t vec)
 vec2_t      
 vec2_normalize(vec2_t vec)
 {
-    f32 mag = vec2_mag(vec);
+	f32 val = m_isqrt((vec.x * vec.x) + (vec.y * vec.y));
 
-    vec.x /= mag;
-    vec.y /= mag;
+    vec.x *= val;
+    vec.y *= val;
 
     return vec;
 }
@@ -229,11 +229,11 @@ vec3_mag(vec3_t vec)
 vec3_t 
 vec3_normalize(vec3_t vec)
 {
-    f32 mag = vec3_mag(vec);
+	f32 val = m_isqrt((vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z));
 
-    vec.x /= mag;
-    vec.y /= mag;
-    vec.z /= mag;
+    vec.x *= val;
+    vec.y *= val;
+    vec.z *= val;
 
     return vec;
 }
@@ -502,7 +502,7 @@ m_sqrt(f32 number)
 }
 
 f32
-m_invsqrt(f32 number)
+m_isqrt(f32 number)
 {
 	int		i;
 	f32		x2, y;
