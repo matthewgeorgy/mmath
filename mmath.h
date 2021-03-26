@@ -12,11 +12,6 @@
 #define m_rads(n)   (n * 0.017453f)
 #define m_degs(n)   (n * 57.29578f)
 
-// TODO: Add RNG functions (randi, randf, etc.)
-// TODO: Add Quake III inv sqrt function
-//        -> maybe test more to see if this yields perf. improvements
-// TODO: maybe sort functions in alphabetical order???
-
 /* ============================ *
  * =====    Vector2D      ===== *
  * ============================ */
@@ -320,7 +315,7 @@ mat4_rotate(f32 angle,
     vec = vec3_normalize(vec);
     f32 c = m_cos(m_rads(angle));
     f32 s = m_sin(m_rads(angle));
-    f32 c1 = 1 - c;
+    f32 c1 = 1.0f - c;
 
     mat4_t matrix = {0};
 
@@ -348,7 +343,7 @@ mat4_rotate_v(f32 angle,
     vec = vec3_normalize(vec);
     f32 c = m_cos(m_rads(angle));
     f32 s = m_sin(m_rads(angle));
-    f32 c1 = 1 - c;
+    f32 c1 = 1.0f - c;
 
     mat4_t matrix = {0};
 
@@ -406,22 +401,22 @@ mat4_lookat(vec3_t eye,
     matrix.col1[0] = s.x;
     matrix.col1[1] = u.x;
     matrix.col1[2] = -f.x;
-    matrix.col1[3] = 0;
+    matrix.col1[3] = 0.0f;
 
     matrix.col2[0] = s.y;
     matrix.col2[1] = u.y;
     matrix.col2[2] = -f.y;
-    matrix.col2[3] = 0;
+    matrix.col2[3] = 0.0f;
 
     matrix.col3[0] = s.z;
     matrix.col3[1] = u.z;
     matrix.col3[2] = -f.z;
-    matrix.col3[3] = 0;
+    matrix.col3[3] = 0.0f;
 
     matrix.col4[0] = -vec3_dot(s, eye);
     matrix.col4[1] = -vec3_dot(u, eye);
     matrix.col4[2] = vec3_dot(f, eye);
-    matrix.col4[3] = 1;
+    matrix.col4[3] = 1.0f;
 
     return matrix;
 }
@@ -487,12 +482,12 @@ m_randf(u32 index)
 f32
 m_sqrt(f32 number)
 {
-	int		i;
+	s32		i;
 	f32		x2, y;
 
 	x2 = number * 0.5f;
 	y = number;
-	i = *(int *)&y;					// evil floating point bit hack
+	i = *(s32 *)&y;					// evil floating point bit hack
 	i = 0x5F3759DF - (i >> 1);		// what the fuck?
 	y = *(f32 *)&i;
 	y = y * (1.5f - (x2 * y * y));	// 1st iteration
@@ -504,12 +499,12 @@ m_sqrt(f32 number)
 f32
 m_isqrt(f32 number)
 {
-	int		i;
+	s32		i;
 	f32		x2, y;
 
 	x2 = number * 0.5f;
 	y = number;
-	i = *(int *)&y;					// evil floating point bit hack
+	i = *(s32 *)&y;					// evil floating point bit hack
 	i = 0x5F3759DF - (i >> 1);		// what the fuck?
 	y = *(f32 *)&i;
 	y = y * (1.5f - (x2 * y * y));	// 1st iteration
