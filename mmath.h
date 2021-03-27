@@ -13,7 +13,7 @@
 #define m_degs(n)   (n * 57.29578f)
 
 /* ============================ *
- * =====    Vector2D      ===== *
+ * =====     Vector2D     ===== *
  * ============================ */
 
 typedef struct _TAG_vec2
@@ -31,7 +31,7 @@ vec2_t      vec2_normalize(vec2_t vec);
 vec2_t      vec2_rotate(vec2_t vec, f32 angle);
 
 /* ============================ *
- * =====    Vector3D      ===== *
+ * =====     Vector3D     ===== *
  * ============================ */
 
 typedef struct _TAG_vec3
@@ -50,7 +50,7 @@ f32         vec3_mag(vec3_t vec);
 vec3_t      vec3_normalize(vec3_t vec);
 
 /* ============================ *
- * =====    MATRIX4       ===== *
+ * =====     MATRIX4      ===== *
  * ============================ */
 
 typedef struct _TAG_mat4
@@ -74,13 +74,13 @@ mat4_t      mat4_scale(f32 scale_value);
 mat4_t      mat4_mult(mat4_t m1, mat4_t m2);
 
 /* ============================ *
- * =====      MISC		  ===== *
+ * =====      MISC        ===== *
  * ============================ */
 
-u32			m_randi(u32 index);
-f32			m_randf(u32 index);
-f32			m_sqrt(f32 number);
-f32			m_isqrt(f32 number);
+u32         m_randi(u32 index);
+f32         m_randf(u32 index);
+f32         m_sqrt(f32 number);
+f32         m_isqrt(f32 number);
 
 ////////////////////////////////////////////////////////////////////////////////
 // ====== MMATH IMPLEMENTATION ================================================/
@@ -91,8 +91,8 @@ f32			m_isqrt(f32 number);
 ////////////////////////////////////////////////////////////////////////////////
 // VECTOR2D IMPLEMENTATION
 
-vec2_t      
-vec2_add(vec2_t v1, 
+vec2_t
+vec2_add(vec2_t v1,
          vec2_t v2)
 {
     v1.x += v2.x;
@@ -101,8 +101,8 @@ vec2_add(vec2_t v1,
     return v1;
 }
 
-vec2_t      
-vec2_sub(vec2_t v1, 
+vec2_t
+vec2_sub(vec2_t v1,
          vec2_t v2)
 {
     v1.x -= v2.x;
@@ -111,8 +111,8 @@ vec2_sub(vec2_t v1,
     return v1;
 }
 
-vec2_t      
-vec2_scal(vec2_t vec, 
+vec2_t
+vec2_scal(vec2_t vec,
           f32 scalar)
 {
     vec.x *= scalar;
@@ -121,23 +121,23 @@ vec2_scal(vec2_t vec,
     return vec;
 }
 
-f32         
-vec2_dot(vec2_t v1, 
+f32
+vec2_dot(vec2_t v1,
          vec2_t v2)
 {
     return ((v1.x * v2.x) + (v1.y * v2.y));
 }
 
-f32         
+f32
 vec2_mag(vec2_t vec)
 {
     return m_sqrt((vec.x * vec.x) + (vec.y * vec.y));
 }
 
-vec2_t      
+vec2_t
 vec2_normalize(vec2_t vec)
 {
-	f32 val = m_isqrt((vec.x * vec.x) + (vec.y * vec.y));
+    f32 val = m_isqrt((vec.x * vec.x) + (vec.y * vec.y));
 
     vec.x *= val;
     vec.y *= val;
@@ -145,8 +145,8 @@ vec2_normalize(vec2_t vec)
     return vec;
 }
 
-vec2_t      
-vec2_rotate(vec2_t vec, 
+vec2_t
+vec2_rotate(vec2_t vec,
             f32 angle)
 {
     f32 r_angle = m_rads(angle);
@@ -162,8 +162,8 @@ vec2_rotate(vec2_t vec,
 ////////////////////////////////////////////////////////////////////////////////
 // VECTOR3D IMPLEMENTATION
 
-vec3_t      
-vec3_add(vec3_t v1, 
+vec3_t
+vec3_add(vec3_t v1,
          vec3_t v2)
 {
     v1.x += v2.x;
@@ -173,8 +173,8 @@ vec3_add(vec3_t v1,
     return v1;
 }
 
-vec3_t      
-vec3_sub(vec3_t v1, 
+vec3_t
+vec3_sub(vec3_t v1,
          vec3_t v2)
 {
     v1.x -= v2.x;
@@ -184,8 +184,8 @@ vec3_sub(vec3_t v1,
     return v1;
 }
 
-vec3_t      
-vec3_scal(vec3_t vec, 
+vec3_t
+vec3_scal(vec3_t vec,
           f32 scalar)
 {
     vec.x *= scalar;
@@ -195,14 +195,14 @@ vec3_scal(vec3_t vec,
     return vec;
 }
 
-f32     
-vec3_dot(vec3_t v1, 
+f32
+vec3_dot(vec3_t v1,
          vec3_t v2)
 {
     return ((v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z));
 }
 
-vec3_t      
+vec3_t
 vec3_cross(vec3_t v1,
            vec3_t v2)
 {
@@ -392,7 +392,7 @@ mat4_lookat(vec3_t eye,
             vec3_t center, 
             vec3_t up)
 {
-    const vec3_t f = vec3_normalize(vec3_sub(center, eye));  
+    const vec3_t f = vec3_normalize(vec3_sub(center, eye));
     const vec3_t s = vec3_normalize(vec3_cross(f, up));
     const vec3_t u = vec3_cross(s, f);
 
@@ -468,52 +468,51 @@ mat4_mult(mat4_t m1,
 u32
 m_randi(u32 index)
 {
-	index = (index << 13) ^ index;
-	return ((index * (index * index * 15731 + 789221) + 1376312589) & 0x7FFFFFFF);
+    index = (index << 13) ^ index;
+    return ((index * (index * index * 15731 + 789221) + 1376312589) & 0x7FFFFFFF);
 }
 
 f32
 m_randf(u32 index)
 {
-	index = (index << 13) ^ index;
-	return (((index * (index * index * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0f) * 0.5f;
+    index = (index << 13) ^ index;
+    return (((index * (index * index * 15731 + 789221) + 1376312589) & 0x7FFFFFFF) / 1073741824.0f) * 0.5f;
 }
 
 f32
 m_sqrt(f32 number)
 {
-	s32		i;
-	f32		x2, y;
+    s32     i;
+    f32     x, y;
 
-	x2 = number * 0.5f;
-	y = number;
-	i = *(s32 *)&y;					// evil floating point bit hack
-	i = 0x5F3759DF - (i >> 1);		// what the fuck?
-	y = *(f32 *)&i;
-	y = y * (1.5f - (x2 * y * y));	// 1st iteration
-	y = y * (1.5f - (x2 * y * y));	// 2nd iteration
+    x = number * 0.5f;
+    y = number;
+    i = *(s32 *)&y;                 // evil floating point bit hack
+    i = 0x5F3759DF - (i >> 1);      // what the fuck?
+    y = *(f32 *)&i;
+    y = y * (1.5f - (x * y * y));  // 1st iteration
+    y = y * (1.5f - (x * y * y));  // 2nd iteration
 
-	return number * y;
+    return number * y;  // mulitply by original num to reverse and get sqrt
 }
 
 f32
 m_isqrt(f32 number)
 {
-	s32		i;
-	f32		x2, y;
+    s32     i;
+    f32     x, y;
 
-	x2 = number * 0.5f;
-	y = number;
-	i = *(s32 *)&y;					// evil floating point bit hack
-	i = 0x5F3759DF - (i >> 1);		// what the fuck?
-	y = *(f32 *)&i;
-	y = y * (1.5f - (x2 * y * y));	// 1st iteration
-	y = y * (1.5f - (x2 * y * y));	// 2nd iteration
+    x = number * 0.5f;
+    y = number;
+    i = *(s32 *)&y;                 // evil floating point bit hack
+    i = 0x5F3759DF - (i >> 1);      // what the fuck?
+    y = *(f32 *)&i;
+    y = y * (1.5f - (x * y * y));  // 1st iteration
+    y = y * (1.5f - (x * y * y));  // 2nd iteration
 
-	return y;				// multiply by original num to reverse and get sqrt
+    return y;
 }
 
 #endif // MMATH_IMPL
 
 #endif // MMATH_H
-
