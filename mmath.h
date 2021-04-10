@@ -482,8 +482,8 @@ m_randf(u32 index)
 f32
 m_sqrt(f32 number)
 {
-    s32     i;
-    f32     x, y;
+    s32 i;
+    f32 x, y;
 
     x = number * 0.5f;
     y = number;
@@ -499,8 +499,8 @@ m_sqrt(f32 number)
 f32
 m_isqrt(f32 number)
 {
-    s32     i;
-    f32     x, y;
+    s32 i;
+    f32 x, y;
 
     x = number * 0.5f;
     y = number;
