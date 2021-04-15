@@ -16,19 +16,41 @@
  * =====     Vector2D     ===== *
  * ============================ */
 
+// Definition of a 2D vector
 typedef struct _TAG_vec2
 {
     f32 x,
     	y;
 } vec2_t;
 
+// Computes the sum of two 2D vectors
+// (v1 + v2)
 vec2_t      vec2_add(vec2_t v1, vec2_t v2);
+
+// Computes the difference of two 2D vector
+// (v1 - v2)
 vec2_t      vec2_sub(vec2_t v1, vec2_t v2);
+
+// Computes a vector multiplied by a scalar
+// (vec * scalar)
 vec2_t      vec2_scal(vec2_t vec, f32 scalar);
+
+// Computes the dot product of 2 2D vectors
+// (v1 . v2)
 f32         vec2_dot(vec2_t v1, vec2_t v2);
+
+// Computes the magnitude (norm) of a 2D vector
+// (||vec||)
 f32         vec2_mag(vec2_t vec);
+
+// Normalizes a given vector
+// (vec * (1 / ||vec||))
 vec2_t      vec2_normalize(vec2_t vec);
+
+// Computes a 2D vector rotated by an angle in degrees
 vec2_t      vec2_rotate(vec2_t vec, f32 angle);
+
+
 
 /* ============================ *
  * =====     Vector3D     ===== *
