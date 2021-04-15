@@ -144,11 +144,20 @@ mat4_t      mat4_mult(mat4_t m1, mat4_t m2);
  * =====      Misc        ===== *
  * ============================ */
 
-// Pseudo RNG for unsigned ints
-u32         m_randi(u32 index);
+// Pseudo RNG for unsigned 32bit ints
+u32         m_randui(u32 index);
 
 // Pseudo RNG for 32bit floats (ranged 0 to 1)
 f32         m_randf(u32 index);
+
+// Pseudo RNG for 64bit floats (ranged 0 to 1)
+f64         m_randd(u32 index);
+
+// Pseudo RNG for 32bit floats (ranged -1 to 1)
+f32         m_randnf(u32 index);
+
+// Pseudo RNG for 64bit floats (ranged -1 to 1)
+f64         m_randnd(u32 index);
 
 // Quake III square root
 f32         m_sqrt(f32 number);
@@ -540,7 +549,7 @@ mat4_mult(mat4_t m1,
 // MISC IMPLEMENTATION
 
 u32
-m_randi(u32 index)
+m_randui(u32 index)
 {
     index = (index << 13) ^ index;
     return ((index * (index * index * 15731 + 789221) + 1376312589) & 0x7FFFFFFF);
@@ -551,6 +560,27 @@ m_randf(u32 index)
 {
     index = (index << 13) ^ index;
     return (((index * (index * index * 15731 + 789221) + 1376312589) & 0x7FFFFFFF) / 1073741824.0f) * 0.5f;
+}
+
+f64
+m_randd(u32 index)
+{
+    index = (index << 13) ^ index;
+    return (((index * (index * index * 15731 + 789221) + 1376312589) & 0x7FFFFFFF) / 1073741824.0) * 0.5;
+}
+
+f32
+m_randnf(u32 index)
+{
+	index = (index << 13) ^ index;
+	return (((index * (index * index * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0f) - 1.0f;
+}
+
+f64
+m_randnd(u32 index)
+{
+	index = (index << 13) ^ index;
+	return (((index * (index * index * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0f) - 1.0;
 }
 
 f32
