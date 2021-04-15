@@ -27,15 +27,15 @@ typedef struct _TAG_vec2
 // (v1 + v2)
 vec2_t      vec2_add(vec2_t v1, vec2_t v2);
 
-// Computes the difference of two 2D vector
+// Computes the difference of two 2D vectors
 // (v1 - v2)
 vec2_t      vec2_sub(vec2_t v1, vec2_t v2);
 
-// Computes a vector multiplied by a scalar
+// Computes a 2D vector multiplied by a scalar
 // (vec * scalar)
 vec2_t      vec2_scal(vec2_t vec, f32 scalar);
 
-// Computes the dot product of 2 2D vectors
+// Computes the dot product of two 2D vectors
 // (v1 . v2)
 f32         vec2_dot(vec2_t v1, vec2_t v2);
 
@@ -43,7 +43,7 @@ f32         vec2_dot(vec2_t v1, vec2_t v2);
 // (||vec||)
 f32         vec2_mag(vec2_t vec);
 
-// Normalizes a given vector
+// Normalizes a given 2D vector
 // (vec * (1 / ||vec||))
 vec2_t      vec2_normalize(vec2_t vec);
 
@@ -56,6 +56,7 @@ vec2_t      vec2_rotate(vec2_t vec, f32 angle);
  * =====     Vector3D     ===== *
  * ============================ */
 
+// Definition of a 3D vector
 typedef struct _TAG_vec3
 {
     f32 x,
@@ -63,12 +64,32 @@ typedef struct _TAG_vec3
     	z;
 } vec3_t;
 
+// Computes the sum of two 3D vectors
+// (v1 + v2)
 vec3_t      vec3_add(vec3_t v1, vec3_t v2);
+
+// Computes the difference of two 3D vectors
+// (v1 - v2)
 vec3_t      vec3_sub(vec3_t v1, vec3_t v2);
+
+// Computes a 3D vector multipled by a scalar
+// (vec * scalar)
 vec3_t      vec3_scal(vec3_t vec, f32 scalar);
+
+// Computes the dot product of two 3D vectors
+// (v1 . v2)
 f32         vec3_dot(vec3_t v1, vec3_t v2);
+
+// Computes the cross product of two 3D vectors
+// (v1 x v2)
 vec3_t      vec3_cross(vec3_t v1, vec3_t v2);
+
+// Computes the magnitude (norm) of a 3D vector
+// (||vec||)
 f32         vec3_mag(vec3_t vec);
+
+// Normalizes a given 3D vector
+// (vec * (1 / ||vec||))
 vec3_t      vec3_normalize(vec3_t vec);
 
 /* ============================ *
