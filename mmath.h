@@ -93,9 +93,10 @@ f32         vec3_mag(vec3_t vec);
 vec3_t      vec3_normalize(vec3_t vec);
 
 /* ============================ *
- * =====     MATRIX4      ===== *
+ * =====     Matrix4      ===== *
  * ============================ */
 
+// Definition of a 4x4 matrix
 typedef struct _TAG_mat4
 {
     f32 col1[4],
@@ -104,16 +105,39 @@ typedef struct _TAG_mat4
 		col4[4];
 } mat4_t;
 
+// Returns a 4x4 identity matrix
 mat4_t      mat4_identity(void);
+
+// Returns a 4x4 translation matrix given x, y, z components
 mat4_t      mat4_translate(f32 x, f32 y, f32 z);
+
+// Returns a 4x4 translation matrix given a 3D vector
 mat4_t      mat4_translate_v(vec3_t vec);
+
+// Removes the "translation" component from a 4x4 matrix
+// (col4[0], col4[1], col4[2] ---> 0)
 mat4_t      mat4_translate_remove(mat4_t matrix);
+
+// Prints the given 4x4 matrix to stdout
 void        mat4_print(mat4_t matrix);
+
+// Returns a 4x4 rotation matrix given an angle in degrees and x, y, z components
 mat4_t      mat4_rotate(f32 angle, f32 x, f32 y, f32 z);
+
+// Returns a 4x4 rotation matrix given an angle in degrees and 3D vector
 mat4_t      mat4_rotate_v(f32 angle, vec3_t vec);
+
+// Returns a 4x4 perspective matrix given an FOV, aspect ratio, and
+// near/far plane distance values
 mat4_t      mat4_perspective(f32 fov, f32 aspect_ratio, f32 near, f32 far);
+
+// Returns a 4x4 lookat matrix given an eye, center, and up 3D vector
 mat4_t      mat4_lookat(vec3_t eye, vec3_t center, vec3_t up);
+
+// Returns a 4x4 scale matrix given a scale factor/value
 mat4_t      mat4_scale(f32 scale_value);
+
+// Computes the product of two 4x4 matrices
 mat4_t      mat4_mult(mat4_t m1, mat4_t m2);
 
 /* ============================ *
