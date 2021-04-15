@@ -573,14 +573,14 @@ f32
 m_randnf(u32 index)
 {
 	index = (index << 13) ^ index;
-	return (((index * (index * index * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0f) - 1.0f;
+	return (((index * (index * index * 15731 + 789221) + 1376312589) & 0x7FFFFFFF) / 1073741824.0f) - 1.0f;
 }
 
 f64
 m_randnd(u32 index)
 {
 	index = (index << 13) ^ index;
-	return (((index * (index * index * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0f) - 1.0;
+	return (((index * (index * index * 15731 + 789221) + 1376312589) & 0x7FFFFFFF) / 1073741824.0f) - 1.0;
 }
 
 f32
