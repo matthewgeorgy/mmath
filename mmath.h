@@ -18,8 +18,8 @@
 
 typedef struct _TAG_vec2
 {
-    f32 x;
-    f32 y;
+    f32 x,
+    	y;
 } vec2_t;
 
 vec2_t      vec2_add(vec2_t v1, vec2_t v2);
@@ -36,9 +36,9 @@ vec2_t      vec2_rotate(vec2_t vec, f32 angle);
 
 typedef struct _TAG_vec3
 {
-    f32 x;
-    f32 y;
-    f32 z;
+    f32 x,
+    	y,
+    	z;
 } vec3_t;
 
 vec3_t      vec3_add(vec3_t v1, vec3_t v2);
@@ -55,10 +55,10 @@ vec3_t      vec3_normalize(vec3_t vec);
 
 typedef struct _TAG_mat4
 {
-    f32 col1[4];
-    f32 col2[4];
-    f32 col3[4];
-    f32 col4[4];
+    f32 col1[4],
+		col2[4],
+		col3[4],
+		col4[4];
 } mat4_t;
 
 mat4_t      mat4_identity(void);
