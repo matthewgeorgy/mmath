@@ -141,12 +141,19 @@ mat4_t      mat4_scale(f32 scale_value);
 mat4_t      mat4_mult(mat4_t m1, mat4_t m2);
 
 /* ============================ *
- * =====      MISC        ===== *
+ * =====      Misc        ===== *
  * ============================ */
 
+// Pseudo RNG for unsigned ints
 u32         m_randi(u32 index);
+
+// Pseudo RNG for 32bit floats (ranged 0 to 1)
 f32         m_randf(u32 index);
+
+// Quake III square root
 f32         m_sqrt(f32 number);
+
+// Quake III inverse square root
 f32         m_isqrt(f32 number);
 
 ////////////////////////////////////////////////////////////////////////////////
