@@ -20,7 +20,7 @@
 typedef struct _TAG_vec2
 {
     f32 x,
-    	y;
+        y;
 } vec2_t;
 
 // Computes the sum of two 2D vectors
@@ -50,8 +50,6 @@ vec2_t      vec2_normalize(vec2_t vec);
 // Computes a 2D vector rotated by an angle in degrees
 vec2_t      vec2_rotate(vec2_t vec, f32 angle);
 
-
-
 /* ============================ *
  * =====     Vector3D     ===== *
  * ============================ */
@@ -60,8 +58,8 @@ vec2_t      vec2_rotate(vec2_t vec, f32 angle);
 typedef struct _TAG_vec3
 {
     f32 x,
-    	y,
-    	z;
+        y,
+        z;
 } vec3_t;
 
 // Computes the sum of two 3D vectors
@@ -100,9 +98,9 @@ vec3_t      vec3_normalize(vec3_t vec);
 typedef struct _TAG_mat4
 {
     f32 col1[4],
-		col2[4],
-		col3[4],
-		col4[4];
+        col2[4],
+        col3[4],
+        col4[4];
 } mat4_t;
 
 // Returns a 4x4 identity matrix
@@ -141,7 +139,7 @@ mat4_t      mat4_scale(f32 scale_value);
 mat4_t      mat4_mult(mat4_t m1, mat4_t m2);
 
 /* ============================ *
- * =====      Misc        ===== *
+ * =====       Misc       ===== *
  * ============================ */
 
 // Pseudo RNG for unsigned 32bit ints
@@ -307,7 +305,7 @@ vec3_mag(vec3_t vec)
 vec3_t 
 vec3_normalize(vec3_t vec)
 {
-	f32 val = m_isqrt((vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z));
+    f32 val = m_isqrt((vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z));
 
     vec.x *= val;
     vec.y *= val;
@@ -572,15 +570,15 @@ m_randd(u32 index)
 f32
 m_randnf(u32 index)
 {
-	index = (index << 13) ^ index;
-	return (((index * (index * index * 15731 + 789221) + 1376312589) & 0x7FFFFFFF) / 1073741824.0f) - 1.0f;
+    index = (index << 13) ^ index;
+    return (((index * (index * index * 15731 + 789221) + 1376312589) & 0x7FFFFFFF) / 1073741824.0f) - 1.0f;
 }
 
 f64
 m_randnd(u32 index)
 {
-	index = (index << 13) ^ index;
-	return (((index * (index * index * 15731 + 789221) + 1376312589) & 0x7FFFFFFF) / 1073741824.0) - 1.0;
+    index = (index << 13) ^ index;
+    return (((index * (index * index * 15731 + 789221) + 1376312589) & 0x7FFFFFFF) / 1073741824.0) - 1.0;
 }
 
 f32
