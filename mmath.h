@@ -321,13 +321,11 @@ mat4_t
 mat4_identity(void)
 {
     mat4_t matrix = {0};
-    f32 *ptr = m_cast(matrix);
-
-    for (u8 i = 0; i < 4; i++)
-    {
-        *ptr = 1.0f;
-        ptr += 5;
-    }
+    
+    matrix.col1[0] = 1.0f;
+    matrix.col2[1] = 1.0f;
+    matrix.col3[2] = 1.0f;
+    matrix.col4[3] = 1.0f;
 
     return matrix;
 }
@@ -361,10 +359,9 @@ mat4_translate_v(vec3_t vec)
 mat4_t
 mat4_translate_remove(mat4_t matrix)
 {
-    for (u8 i = 0; i < 3; i++)
-    {
-        matrix.col4[i] = 0.0f;
-    }
+    matrix.col4[0] = 0.0f;
+    matrix.col4[1] = 0.0f;
+    matrix.col4[2] = 0.0f;
 
     return matrix;
 }
@@ -506,14 +503,11 @@ mat4_t
 mat4_scale(f32 scale_value)
 {
     mat4_t matrix = {0};
-    f32 *ptr = m_cast(matrix);
 
-    for (u8 i = 0; i < 3; i++)
-    {
-        *ptr = scale_value;
-        ptr += 5;
-    }
-    *ptr = 1.0f;
+    matrix.col1[0] = scale_value;
+    matrix.col2[1] = scale_value;
+    matrix.col3[2] = scale_value;
+    matrix.col4[3] = 1.0f;
 
     return matrix;
 }
