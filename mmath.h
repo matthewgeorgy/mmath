@@ -167,7 +167,7 @@ f32         m_isqrt(f32 number);
 // ====== MMATH IMPLEMENTATION ================================================/
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifdef MMATH_IMPL
+ #ifdef MMATH_IMPL
 
 ////////////////////////////////////////////////////////////////////////////////
 // VECTOR2D IMPLEMENTATION
@@ -609,6 +609,6 @@ m_isqrt(f32 number)
     return y;
 }
 
-#endif // MMATH_IMPL
+ #endif // MMATH_IMPL
 
 #endif // MMATH_H
