@@ -4,9 +4,9 @@
 #include <stdint.h>
 
 // Defs for static
-#define local		static
-#define global		static
-#define internal	static
+#define local       static
+#define global      static
+#define internal    static
 
 // Unsigned
 typedef uint8_t     u8;
@@ -15,10 +15,10 @@ typedef uint32_t    u32;
 typedef uint64_t    u64;
 typedef size_t      usize;
 
-typedef u8			byte;
-typedef u16			word;
-typedef u32			dword;
-typedef u64			qword;
+typedef u8          byte;
+typedef u16         word;
+typedef u32         dword;
+typedef u64         qword;
 
 // Signed
 typedef int8_t      s8;
@@ -34,8 +34,8 @@ typedef double      f64;
 typedef s8          b8;
 typedef s32         b32;
 
-#define TRUE		1
-#define FALSE		0
+#define TRUE        1
+#define FALSE       0
 
 // Max values
 #define U8_MAX      UINT8_MAX
