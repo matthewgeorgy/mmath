@@ -23,6 +23,9 @@ typedef struct _TAG_vec2
         y;
 } vec2_t;
 
+// Constructs a 2D vector given x, y components
+vec2_t      vec2_ctor(f32 x, f32 y);
+
 // Computes the sum of two 2D vectors
 // (v1 + v2)
 vec2_t      vec2_add(vec2_t v1, vec2_t v2);
@@ -61,6 +64,9 @@ typedef struct _TAG_vec3
         y,
         z;
 } vec3_t;
+
+// Constructs a 3D vector given x, y, z components
+vec3_t      vec3_ctor(f32 x, f32 y, f32 z);
 
 // Computes the sum of two 3D vectors
 // (v1 + v2)
@@ -173,6 +179,18 @@ f32         m_isqrt(f32 number);
 // VECTOR2D IMPLEMENTATION
 
 vec2_t
+vec2_ctor(f32 x,
+          f32 y)
+{
+    vec2_t vec;
+
+    vec.x = x;
+    vec.y = y;
+
+    return vec;
+}
+
+vec2_t
 vec2_add(vec2_t v1,
          vec2_t v2)
 {
@@ -242,6 +260,20 @@ vec2_rotate(vec2_t vec,
 
 ////////////////////////////////////////////////////////////////////////////////
 // VECTOR3D IMPLEMENTATION
+
+vec3_t
+vec3_ctor(f32 x,
+          f32 y,
+          f32 z)
+{
+    vec3_t vec;
+
+    vec.x = x;
+    vec.y = y;
+    vec.z = z;
+
+    return vec;
+}
 
 vec3_t
 vec3_add(vec3_t v1,
