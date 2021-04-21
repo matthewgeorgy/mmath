@@ -1,4 +1,4 @@
-# mmath
+# MMath
 
 Last updated: Apr 11th, 2021
 
