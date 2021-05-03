@@ -630,7 +630,7 @@ m_sqrt(f32 number)
     y = y * (1.5f - (x * y * y));   // 1st iteration
     y = y * (1.5f - (x * y * y));   // 2nd iteration
 
-    return number * y;  // mulitply by original num to reverse and get sqrt
+    return number * y;              // mulitply by original num to reverse and get sqrt
 }
 
 f32
