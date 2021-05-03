@@ -407,10 +407,10 @@ mat4_identity(void)
 {
     mat4_t matrix = {0};
     
-    matrix.col1[0] = 1.0f;
-    matrix.col2[1] = 1.0f;
-    matrix.col3[2] = 1.0f;
-    matrix.col4[3] = 1.0f;
+    matrix.col1.x = 1.0f;
+    matrix.col2.y = 1.0f;
+    matrix.col3.z = 1.0f;
+    matrix.col4.w = 1.0f;
 
     return matrix;
 }
@@ -422,9 +422,9 @@ mat4_translate(f32 x,
 {
     mat4_t matrix = mat4_identity();
 
-    matrix.col4[0] = x;
-    matrix.col4[1] = y;
-    matrix.col4[2] = z;
+    matrix.col4.x = x;
+    matrix.col4.y = y;
+    matrix.col4.z = z;
 
     return matrix;
 }
@@ -434,9 +434,9 @@ mat4_translate_v(vec3_t vec)
 {
     mat4_t matrix = mat4_identity();
 
-    matrix.col4[0] = vec.x;
-    matrix.col4[1] = vec.y;
-    matrix.col4[2] = vec.z;
+    matrix.col4.x = vec.x;
+    matrix.col4.y = vec.y;
+    matrix.col4.z = vec.z;
 
     return matrix;
 }
@@ -444,9 +444,9 @@ mat4_translate_v(vec3_t vec)
 mat4_t
 mat4_translate_remove(mat4_t matrix)
 {
-    matrix.col4[0] = 0.0f;
-    matrix.col4[1] = 0.0f;
-    matrix.col4[2] = 0.0f;
+    matrix.col4.x = 0.0f;
+    matrix.col4.y = 0.0f;
+    matrix.col4.z = 0.0f;
 
     return matrix;
 }
@@ -454,15 +454,11 @@ mat4_translate_remove(mat4_t matrix)
 void
 mat4_print(mat4_t matrix)
 {
-    f32 *ptr;
-
     for (u8 i = 0; i < 4; i++)
     {
-        ptr = &matrix.col1[i];
         for (u8 j = 0; j < 4; j++)
         {
-            printf("%f ", *ptr);
-            ptr += 4;
+            printf("%f ", matrix.elements[i + j * 4]);
         }
         printf("\n");
     }
@@ -482,19 +478,19 @@ mat4_rotate(f32 angle,
 
     mat4_t matrix = {0};
 
-    matrix.col1[0] = (c1 * vec.x * vec.x) + c;
-    matrix.col1[1] = (c1 * vec.x * vec.y) + s * vec.z;
-    matrix.col1[2] = (c1 * vec.x * vec.z) - s * vec.y;
+    matrix.col1.x = (c1 * vec.x * vec.x) + c;
+    matrix.col1.y = (c1 * vec.x * vec.y) + s * vec.z;
+    matrix.col1.z = (c1 * vec.x * vec.z) - s * vec.y;
 
-    matrix.col2[0] = (c1 * vec.x * vec.y) - s * vec.z;
-    matrix.col2[1] = (c1 * vec.y * vec.y) + c;
-    matrix.col2[2] = (c1 * vec.y * vec.z) + s * vec.x;
+    matrix.col2.x = (c1 * vec.x * vec.y) - s * vec.z;
+    matrix.col2.y = (c1 * vec.y * vec.y) + c;
+    matrix.col2.z = (c1 * vec.y * vec.z) + s * vec.x;
 
-    matrix.col3[0] = (c1 * vec.x * vec.z) + s * vec.y;
-    matrix.col3[1] = (c1 * vec.y * vec.z) - s * vec.x;
-    matrix.col3[2] = (c1 * vec.z * vec.z) + c;
+    matrix.col3.x = (c1 * vec.x * vec.z) + s * vec.y;
+    matrix.col3.y = (c1 * vec.y * vec.z) - s * vec.x;
+    matrix.col3.z = (c1 * vec.z * vec.z) + c;
 
-    matrix.col4[3] = 1.0f;
+    matrix.col4.w = 1.0f;
 
     return matrix;
 }
@@ -510,19 +506,19 @@ mat4_rotate_v(f32 angle,
 
     mat4_t matrix = {0};
 
-    matrix.col1[0] = (c1 * vec.x * vec.x) + c;
-    matrix.col1[1] = (c1 * vec.x * vec.y) + s * vec.z;
-    matrix.col1[2] = (c1 * vec.x * vec.z) - s * vec.y;
+    matrix.col1.x = (c1 * vec.x * vec.x) + c;
+    matrix.col1.y = (c1 * vec.x * vec.y) + s * vec.z;
+    matrix.col1.z = (c1 * vec.x * vec.z) - s * vec.y;
 
-    matrix.col2[0] = (c1 * vec.x * vec.y) - s * vec.z;
-    matrix.col2[1] = (c1 * vec.y * vec.y) + c;
-    matrix.col2[2] = (c1 * vec.y * vec.z) + s * vec.x;
+    matrix.col2.x = (c1 * vec.x * vec.y) - s * vec.z;
+    matrix.col2.y = (c1 * vec.y * vec.y) + c;
+    matrix.col2.z = (c1 * vec.y * vec.z) + s * vec.x;
 
-    matrix.col3[0] = (c1 * vec.x * vec.z) + s * vec.y;
-    matrix.col3[1] = (c1 * vec.y * vec.z) - s * vec.x;
-    matrix.col3[2] = (c1 * vec.z * vec.z) + c;
+    matrix.col3.x = (c1 * vec.x * vec.z) + s * vec.y;
+    matrix.col3.y = (c1 * vec.y * vec.z) - s * vec.x;
+    matrix.col3.z = (c1 * vec.z * vec.z) + c;
 
-    matrix.col4[3] = 1.0f;
+    matrix.col4.w = 1.0f;
 
     return matrix;
 }
@@ -538,14 +534,14 @@ mat4_perspective(f32 fov,
     
     mat4_t matrix = {0};
 
-    matrix.col1[0] = 1 / (aspect_ratio * t);
+    matrix.col1.x = 1 / (aspect_ratio * t);
 
-    matrix.col2[1] = 1 / t;
+    matrix.col2.y = 1 / t;
 
-    matrix.col3[2] = -1 * ((far + near) / fdelta);
-    matrix.col3[3] = -1;
+    matrix.col3.z = -1 * ((far + near) / fdelta);
+    matrix.col3.w = -1;
 
-    matrix.col4[2] = ((-2.0f * far * near) / fdelta);
+    matrix.col4.z = ((-2.0f * far * near) / fdelta);
 
     return matrix;
 }
@@ -561,25 +557,25 @@ mat4_lookat(vec3_t eye,
 
     mat4_t matrix;
 
-    matrix.col1[0] = s.x;
-    matrix.col1[1] = u.x;
-    matrix.col1[2] = -f.x;
-    matrix.col1[3] = 0.0f;
+    matrix.col1.x = s.x;
+    matrix.col1.y = u.x;
+    matrix.col1.z = -f.x;
+    matrix.col1.w = 0.0f;
 
-    matrix.col2[0] = s.y;
-    matrix.col2[1] = u.y;
-    matrix.col2[2] = -f.y;
-    matrix.col2[3] = 0.0f;
+    matrix.col2.x = s.y;
+    matrix.col2.y = u.y;
+    matrix.col2.z = -f.y;
+    matrix.col2.w = 0.0f;
 
-    matrix.col3[0] = s.z;
-    matrix.col3[1] = u.z;
-    matrix.col3[2] = -f.z;
-    matrix.col3[3] = 0.0f;
+    matrix.col3.x = s.z;
+    matrix.col3.y = u.z;
+    matrix.col3.z = -f.z;
+    matrix.col3.w = 0.0f;
 
-    matrix.col4[0] = -vec3_dot(s, eye);
-    matrix.col4[1] = -vec3_dot(u, eye);
-    matrix.col4[2] = vec3_dot(f, eye);
-    matrix.col4[3] = 1.0f;
+    matrix.col4.x = -vec3_dot(s, eye);
+    matrix.col4.y = -vec3_dot(u, eye);
+    matrix.col4.z = vec3_dot(f, eye);
+    matrix.col4.w = 1.0f;
 
     return matrix;
 }
@@ -589,10 +585,10 @@ mat4_scale(f32 scale_value)
 {
     mat4_t matrix = {0};
 
-    matrix.col1[0] = scale_value;
-    matrix.col2[1] = scale_value;
-    matrix.col3[2] = scale_value;
-    matrix.col4[3] = 1.0f;
+    matrix.col1.x = scale_value;
+    matrix.col2.y = scale_value;
+    matrix.col3.z = scale_value;
+    matrix.col4.w = 1.0f;
 
     return matrix;
 }
@@ -602,9 +598,6 @@ mat4_mult(mat4_t m1,
           mat4_t m2)
 {
     mat4_t res;
-    f32 *p1 = m_cast(m1);
-    f32 *p2 = m_cast(m2);
-    f32 *pres = m_cast(res);
 
     for (u8 y = 0; y < 4; y++)
     {
@@ -613,9 +606,9 @@ mat4_mult(mat4_t m1,
             f32 sum = 0.0f;
             for (u8 e = 0; e < 4; e++)
             {
-                sum += p1[x + e * 4] * p2[e + y * 4];
+                sum += m1.elements[x + e * 4] * m2.elements[e + y * 4];
             }
-            pres[x + y * 4] = sum;
+            res.elements[x + y * 4] = sum;
         }
     }
 
