@@ -19,8 +19,15 @@
 // Definition of a 2D vector
 typedef struct _TAG_vec2
 {
-    f32 x,
-        y;
+	union
+	{
+		struct
+		{
+			f32 x,
+				y;
+		};
+		f32 elements[2];
+	};
 } vec2_t;
 
 // Constructs a 2D vector given x, y components
@@ -60,9 +67,16 @@ vec2_t      vec2_rotate(vec2_t vec, f32 angle);
 // Definition of a 3D vector
 typedef struct _TAG_vec3
 {
-    f32 x,
-        y,
-        z;
+	union
+	{
+		struct
+		{
+			f32 x,
+				y,
+				z;
+		};
+		f32 elements[3];
+	};
 } vec3_t;
 
 // Constructs a 3D vector given x, y, z components
