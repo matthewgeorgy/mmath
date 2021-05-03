@@ -166,7 +166,7 @@ mat4_t      mat4_translate(f32 x, f32 y, f32 z);
 mat4_t      mat4_translate_v(vec3_t vec);
 
 // Removes the "translation" component from a 4x4 matrix
-// (col4[0], col4[1], col4[2] ---> 0)
+// (col4.xyz ---> 0)
 mat4_t      mat4_translate_remove(mat4_t matrix);
 
 // Prints the given 4x4 matrix to stdout
