@@ -137,10 +137,17 @@ typedef struct _TAG_vec4
 // Definition of a 4x4 matrix
 typedef struct _TAG_mat4
 {
-    f32 col1[4],
-        col2[4],
-        col3[4],
-        col4[4];
+	union
+	{
+		struct
+		{
+			vec4_t	col1,
+					col2,
+					col3,
+					col4;
+		};
+		f32 elements[16];
+	};
 } mat4_t;
 
 // Returns a 4x4 identity matrix
