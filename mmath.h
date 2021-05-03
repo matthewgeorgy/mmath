@@ -19,15 +19,15 @@
 // Definition of a 2D vector
 typedef struct _TAG_vec2
 {
-	union
-	{
-		struct
-		{
-			f32 x,
-				y;
-		};
-		f32 elements[2];
-	};
+    union
+    {
+        struct
+        {
+            f32 x,
+                y;
+        };
+        f32 elements[2];
+    };
 } vec2_t;
 
 // Constructs a 2D vector given x, y components
@@ -60,6 +60,8 @@ vec2_t      vec2_normalize(vec2_t vec);
 // Computes a 2D vector rotated by an angle in degrees
 vec2_t      vec2_rotate(vec2_t vec, f32 angle);
 
+
+
 /* ============================ *
  * =====     Vector3D     ===== *
  * ============================ */
@@ -67,16 +69,16 @@ vec2_t      vec2_rotate(vec2_t vec, f32 angle);
 // Definition of a 3D vector
 typedef struct _TAG_vec3
 {
-	union
-	{
-		struct
-		{
-			f32 x,
-				y,
-				z;
-		};
-		f32 elements[3];
-	};
+    union
+    {
+        struct
+        {
+            f32 x,
+                y,
+                z;
+        };
+        f32 elements[3];
+    };
 } vec3_t;
 
 // Constructs a 3D vector given x, y, z components
@@ -110,6 +112,8 @@ f32         vec3_mag(vec3_t vec);
 // (vec * (1 / ||vec||))
 vec3_t      vec3_normalize(vec3_t vec);
 
+
+
 /* ============================ *
  * =====     Vector4D     ===== *
  * ============================ */
@@ -117,18 +121,20 @@ vec3_t      vec3_normalize(vec3_t vec);
 // Definition of a 4D vector
 typedef struct _TAG_vec4
 {
-	union
-	{
-		struct
-		{
-			f32 x,
-				y,
-				z,
-				w;
-		};
-		f32 elements[4];
-	};
+    union
+    {
+        struct
+        {
+            f32 x,
+                y,
+                z,
+                w;
+        };
+        f32 elements[4];
+    };
 } vec4_t;
+
+
 
 /* ============================ *
  * =====     Matrix4      ===== *
@@ -137,17 +143,17 @@ typedef struct _TAG_vec4
 // Definition of a 4x4 matrix
 typedef struct _TAG_mat4
 {
-	union
-	{
-		struct
-		{
-			vec4_t	col1,
-					col2,
-					col3,
-					col4;
-		};
-		f32 elements[16];
-	};
+    union
+    {
+        struct
+        {
+            vec4_t  col1,
+                    col2,
+                    col3,
+                    col4;
+        };
+        f32 elements[16];
+    };
 } mat4_t;
 
 // Returns a 4x4 identity matrix
@@ -185,6 +191,8 @@ mat4_t      mat4_scale(f32 scale_value);
 // Computes the product of two 4x4 matrices
 mat4_t      mat4_mult(mat4_t m1, mat4_t m2);
 
+
+
 /* ============================ *
  * =====       Misc       ===== *
  * ============================ */
@@ -221,6 +229,8 @@ s32         m_clampi(s32 val, s32 low, s32 high);
 
 // Clamp function for unsigned 32bit ints
 u32         m_clampui(u32 val, u32 low, u32 high);
+
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // ====== MMATH IMPLEMENTATION ================================================/
