@@ -622,13 +622,12 @@ m_randnd(u32 index)
 f32
 m_sqrt(f32 number)
 {
-    f32 x = number * 0.5f;
     f32 y = number;
     s32 i = *(s32 *)&y;             // evil floating point bit hack
     i = 0x5F3759DF - (i >> 1);      // what the fuck?
     y = *(f32 *)&i;
-    y = y * (1.5f - (x * y * y));   // 1st iteration
-    y = y * (1.5f - (x * y * y));   // 2nd iteration
+    y = y * (1.5f - (0.5f * y * y * y));   // 1st iteration
+    y = y * (1.5f - (0.5f * y * y * y));   // 2nd iteration
 
     return number * y;  // mulitply by original num to reverse and get sqrt
 }
@@ -636,13 +635,12 @@ m_sqrt(f32 number)
 f32
 m_isqrt(f32 number)
 {
-    f32 x = number * 0.5f;
     f32 y = number;
     s32 i = *(s32 *)&y;             // evil floating point bit hack
     i = 0x5F3759DF - (i >> 1);      // what the fuck?
     y = *(f32 *)&i;
-    y = y * (1.5f - (x * y * y));   // 1st iteration
-    y = y * (1.5f - (x * y * y));   // 2nd iteration
+    y = y * (1.5f - (0.5f * y * y * y));   // 1st iteration
+    y = y * (1.5f - (0.5f * y * y * y));   // 2nd iteration
 
     return y;
 }
