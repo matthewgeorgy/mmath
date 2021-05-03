@@ -111,6 +111,26 @@ f32         vec3_mag(vec3_t vec);
 vec3_t      vec3_normalize(vec3_t vec);
 
 /* ============================ *
+ * =====     Vector4D     ===== *
+ * ============================ */
+
+// Definition of a 4D vector
+typedef struct _TAG_vec4
+{
+	union
+	{
+		struct
+		{
+			f32 x,
+				y,
+				z,
+				w;
+		};
+		f32 elements[4];
+	};
+} vec4_t;
+
+/* ============================ *
  * =====     Matrix4      ===== *
  * ============================ */
 
