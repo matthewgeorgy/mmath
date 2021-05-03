@@ -732,8 +732,8 @@ m_clampi(s32 val,
 
 u32
 m_clampui(u32 val,
-         u32 low,
-         u32 high)
+          u32 low,
+          u32 high)
 {
     if (val < low)
         return low;
