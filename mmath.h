@@ -5,6 +5,7 @@
 #include <math.h>
 #include "types.h"
 
+#define m_sqrt(n)   sqrtf(n)
 #define m_sin(n)    sinf(n)
 #define m_cos(n)    cosf(n)
 #define m_tan(n)    tanf(n)
@@ -213,10 +214,10 @@ f32         m_randnf(u32 index);
 f64         m_randnd(u32 index);
 
 // Quake III square root
-f32         m_sqrt(f32 number);
+f32         m_fsqrt(f32 number);
 
 // Quake III inverse square root
-f32         m_isqrt(f32 number);
+f32         m_fsqrtinv(f32 number);
 
 // Clamp function for 32bit floats
 f32         m_clampf(f32 val, f32 low, f32 high);
@@ -293,7 +294,7 @@ vec2_mag(vec2_t vec)
 vec2_t
 vec2_normalize(vec2_t vec)
 {
-    f32 val = m_isqrt((vec.x * vec.x) + (vec.y * vec.y));
+    f32 val = m_fsqrtinv((vec.x * vec.x) + (vec.y * vec.y));
 
     vec.x *= val;
     vec.y *= val;
@@ -394,7 +395,7 @@ vec3_mag(vec3_t vec)
 vec3_t 
 vec3_normalize(vec3_t vec)
 {
-    f32 val = m_isqrt((vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z));
+    f32 val = m_fsqrtinv((vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z));
 
     vec.x *= val;
     vec.y *= val;
@@ -658,7 +659,7 @@ m_randnd(u32 index)
 }
 
 f32
-m_sqrt(f32 number)
+m_fsqrt(f32 number)
 {
     f32 x = number * 0.5f;
     f32 y = number;
@@ -672,7 +673,7 @@ m_sqrt(f32 number)
 }
 
 f32
-m_isqrt(f32 number)
+m_fsqrtinv(f32 number)
 {
     f32 x = number * 0.5f;
     f32 y = number;
