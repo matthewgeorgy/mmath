@@ -224,12 +224,6 @@ f32         m_clampf(f32 val, f32 low, f32 high);
 // Clamp function for 64bit floats
 f64         m_clampd(f64 val, f64 low, f64 high);
 
-// Clamp function for signed 32bit ints
-s32         m_clampi(s32 val, s32 low, s32 high);
-
-// Clamp function for unsigned 32bit ints
-u32         m_clampui(u32 val, u32 low, u32 high);
-
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -708,32 +702,6 @@ f64
 m_clampd(f64 val,
          f64 low,
          f64 high)
-{
-    if (val < low)
-        return low;
-    else if (val > high)
-        return high;
-    else
-        return val;
-}
-
-s32
-m_clampi(s32 val,
-         s32 low,
-         s32 high)
-{
-    if (val < low)
-        return low;
-    else if (val > high)
-        return high;
-    else
-        return val;
-}
-
-u32
-m_clampui(u32 val,
-          u32 low,
-          u32 high)
 {
     if (val < low)
         return low;
